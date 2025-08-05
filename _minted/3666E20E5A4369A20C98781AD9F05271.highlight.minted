@@ -1,0 +1,26 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Heatmap at Compression x}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{best\PYGZus{}compression}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Regularization Strength}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Padding Samples}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{n}{n\PYGZus{}yticks} \PYG{o}{=} \PYG{l+m+mi}{7}
+    \PYG{n}{ytick\PYGZus{}positions} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n\PYGZus{}yticks}\PYG{p}{,}
+        \PYG{n}{dtype} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{yticks}\PYG{p}{(}\PYG{n}{ytick\PYGZus{}positions}\PYG{p}{,} \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{ytick\PYGZus{}positions}\PYG{p}{]}\PYG{p}{)}
+
+    \PYG{n}{n\PYGZus{}xticks} \PYG{o}{=} \PYG{l+m+mi}{12}
+    \PYG{n}{xtick\PYGZus{}positions} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{reg\PYGZus{}array}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n\PYGZus{}xticks}\PYG{p}{,} \PYG{n}{dtype} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{)}
+    \PYG{n}{labels} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{coeff}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{e}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{exponent}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{for} \PYG{n}{exponent} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}exponents} \PYG{k}{for}
+        \PYG{n}{coeff} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}coeff}\PYG{p}{]}
+    \PYG{n}{selected\PYGZus{}labels} \PYG{o}{=} \PYG{p}{[}\PYG{n}{labels}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{xtick\PYGZus{}positions}\PYG{p}{]}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{xticks}\PYG{p}{(}\PYG{n}{xtick\PYGZus{}positions}\PYG{p}{,} \PYG{n}{selected\PYGZus{}labels}\PYG{p}{,} \PYG{n}{rotation} \PYG{o}{=} \PYG{l+m+mi}{45}\PYG{p}{)}
+
+    \PYG{n}{ax}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{n}{rect} \PYG{o}{=} \PYG{n}{patches}\PYG{o}{.}\PYG{n}{Rectangle}\PYG{p}{(}\PYG{p}{(}\PYG{n}{reg\PYGZus{}array}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{best\PYGZus{}reg\PYGZus{}strength}\PYG{p}{)}\PYG{p}{,}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{best\PYGZus{}padding}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{fill} \PYG{o}{=} \PYG{k+kc}{False}\PYG{p}{,}
+            \PYG{n}{edgecolor} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{gold}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{p}{)}
+
+    \PYG{n}{ax}\PYG{o}{.}\PYG{n}{add\PYGZus{}patch}\PYG{p}{(}\PYG{n}{rect}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{tight\PYGZus{}layout}\PYG{p}{(}\PYG{p}{)}
+    \PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{(}\PYG{p}{)}
+\end{MintedVerbatim}

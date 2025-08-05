@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{tradeoff\PYGZus{}plot}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{time\PYGZus{}array}\PYG{p}{,} \PYG{n}{num\PYGZus{}samples}\PYG{p}{,} \PYG{n}{waveform}\PYG{p}{,} \PYG{n}{best\PYGZus{}params}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{error\PYGZus{}array} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{compression\PYGZus{}array} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{best\PYGZus{}padding} \PYG{o}{=} \PYG{n}{best\PYGZus{}params}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+    \PYG{n}{best\PYGZus{}reg\PYGZus{}strength} \PYG{o}{=} \PYG{n}{best\PYGZus{}params}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+\end{MintedVerbatim}

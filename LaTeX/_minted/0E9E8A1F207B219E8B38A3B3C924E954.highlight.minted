@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{interpolation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{time}\PYG{p}{,} \PYG{n}{shift}\PYG{p}{,} \PYG{n}{filtered}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{interp\PYGZus{}func} \PYG{o}{=} \PYG{n}{interp1d}\PYG{p}{(}\PYG{n}{shift}\PYG{p}{,} \PYG{n}{filtered}\PYG{p}{,} \PYG{n}{kind}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{cubic}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{bounds\PYGZus{}error}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{,}
+            \PYG{n}{fill\PYGZus{}value}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{extrapolate}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+        \PYG{n}{filtered\PYGZus{}interp} \PYG{o}{=} \PYG{n}{interp\PYGZus{}func}\PYG{p}{(}\PYG{n}{time}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Now same length as time\PYGZus{}original}
+        \PYG{k}{return} \PYG{n}{filtered\PYGZus{}interp}
+\end{MintedVerbatim}

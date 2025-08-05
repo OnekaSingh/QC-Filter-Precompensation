@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{precompensated} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{precompensation}\PYG{p}{(}\PYG{n}{original}\PYG{p}{,} \PYG{n}{last\PYGZus{}index}\PYG{p}{,}
+        \PYG{n}{best\PYGZus{}reg\PYGZus{}strength}\PYG{p}{,} \PYG{n}{best\PYGZus{}padding}\PYG{p}{)}
+\end{MintedVerbatim}

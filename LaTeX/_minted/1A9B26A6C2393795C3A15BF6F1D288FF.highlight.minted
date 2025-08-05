@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{G\PYGZus{}magnitude} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{G}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} amplitude attenuation}
+    \PYG{n}{G\PYGZus{}phase} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{angle}\PYG{p}{(}\PYG{n}{G}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} phase shift}
+\end{MintedVerbatim}

@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{time\PYGZus{}array} \PYG{o}{*}\PYG{o}{=} \PYG{n}{total\PYGZus{}time}
+\PYG{n}{waveform} \PYG{o}{*}\PYG{o}{=} \PYG{n}{waveform\PYGZus{}size}
+\end{MintedVerbatim}

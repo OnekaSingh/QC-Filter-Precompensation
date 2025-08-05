@@ -1,0 +1,1743 @@
+\documentclass[11pt, a4paper]{article}
+% Pode diminuir a fonte para 10pt ou aumentar para 12pt
+
+%%%%%%%%%%%%%%%%%%%%%%%---Packages---%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage{physics}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%\usepackage{mlmodern}  % Fonte mais forte
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}		% Ajusta as margens
+\usepackage{graphicx}
+\usepackage[english]{babel}
+%\usepackage[notcite,notref]{showkeys}
+\usepackage{amsmath,amssymb,mathtools,amsthm} % pacotes matematicos (amssymb inclui amsfonts)
+\usepackage{xcolor} % Colorir fontes
+\usepackage[colorlinks=true, bookmarksnumbered=true, bookmarksopen=true, bookmarksopenlevel=3, pdfstartview=FitH, linkcolor=black, pdfmenubar=true, pdftoolbar=true, bookmarks=true,citecolor=black, urlcolor=blue, filecolor=magenta,plainpages=false,pdfpagelabels,breaklinks]{hyperref}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage{tocbasic}
+\usepackage[alf]{abntex2cite}
+
+\usepackage{braket}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{thmtools} % for correct autoref naming
+\usepackage{mathtools}
+\usepackage[switch]{lineno} 
+%\linenumbers
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\SetArgSty{textnormal}
+\usepackage{algpseudocode}
+\usepackage{subfiles}
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{outline}
+\usepackage{subcaption}
+% \usetikzlibrary{quantikz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{lipsum}
+
+\newtheorem{teorema}{Teorema}[section]				
+\newtheorem*{teorema1}{Teorema}						
+\newtheorem{lema}[teorema]{Lema}					
+\newtheorem{corolario}[teorema]{Corol\'ario}		
+\newtheorem{proposicao}{Proposi\c c\~ao}[section]	
+\newtheorem{axioma}[teorema]{Axioma}				
+\newtheorem{afirmacao}[teorema]{Afirma\c c\~ao}		
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{exemplo}{Exemplo}[section]			
+\newtheorem{obs}{Observa\c{c}\~ao}[section]			
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\DeclarePairedDelimiterX{\inp}[2]{\langle}{\rangle}{#1, #2}
+\DeclareMathOperator{\ident}{\operatorname{id}}
+\DeclareMathOperator{\card}{\operatorname{card}}				% Comando para cadinalidade
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}					% Comado para função piso
+
+\renewcommand{\qedsymbol}{\textrm{Q.E.D.}}		% Adiciona Q.E.D no final da demonstração
+%\renewcommand*\footnoterule{} % Tira a linha que aparece antes das notas de rodapé
+
+\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    \nopagecolor
+\begin{center}
+        \text{}
+	\vspace{5mm}
+	\textbf{\Large Simulating the Best Waveforms for Shuttling Operations\\ \normalsize A Tool for Ion Shuttling Methodologies}
+	
+	\vspace{19mm}
+	{\normalsize Oneka Singh \\}
+	\vspace{5mm}
+	
+	{\normalsize 04.08.2025\\}
+	\vspace{10mm}
+\end{center}
+
+\newpage
+
+\begin{flushleft}
+	\tableofcontents
+\end{flushleft}
+
+\newpage
+
+\section{Overview}
+\subsection{Introduction and Goal} 
+
+In an ion trap, ions can be shuttled in many ways, each corresponding to a specific voltage ramp. Some of these ways include: swap, merge, split, transport, etc.
+\\
+This paper focuses on the transport voltage waveform for the experimental red trap setup. 
+\\
+When waveforms are passed through the electrodes in the ion trap, there can be noise effects induced by the applied voltages. To combat noise, which is a large issue due to the sensitivity of the ion's state, low-pass FIR filters are applied. In turn, the input voltage waveform becomes distorted in some way. More specifically, for the experiment's filters, the waveform becomes convoluted (see terminology).
+\\
+To restore the correct waveform while filtering electrical noise, a filter precompensation algorithm is employed. It passes an alternative input waveform, which when filtered, yields the original waveform to a degree of accuracy. In other words, the algorithm finds an input waveform that outputs the original waveform before filtering, essentially "canceling" the convoluted output.
+\\
+The goal of this paper is to develop an understanding of how the experimental filters can be simulated, convoluted, and precompensated, all while optimizing to minimize the error between the estimation waveform and the original waveform. The best transport waveforms have minimal error while being as small in time as possible. In addition to precompensation in general, precompensating optimally (small and accurate) is the end objective of the paper, in addition to seeing the tradeoff and limits of the precompensation technique on the passed waveforms.
+
+\subsection{Algorithm Steps}
+The filter simulation contains the following main steps:
+
+\begin{enumerate}
+    \item Setup and structure input data: waveform and time arrays, minimum DAQ step function
+    \item Import the filter kernel as an impulse response
+    \item Simulate the effect of the desired filter as a convolution on the input waveform
+    \item Precompensate the input waveform to estimate the desired output result (this is the heart of the algorithm)
+    \item Optimize parameters: less padding, minimal error, maximum compression, best regularization strength
+    \item Bound the optimization within the limits of the filter's maximum and minimum voltage range
+\end{enumerate}
+
+\subsection{Terminology}
+Factors that are optimized (which are discussed more in the Optimize section) include the compression, padding, regularization, and error. These values come up throughout the paper, and what is meant by them is explained below.
+\begin{definition}
+     \textbf{Compression:} The compression factor, which is 1 for uncompressed waveforms, is a multiplicative value that scales the waveform on the time axis. As part of the goal to minimize the time of the waveform, a larger compression value corresponds to temporally smaller waveforms:
+    \begin{center}
+        Compression $> 1 \rightarrow$ Larger Waveform than Original \\
+        Compression $= 1 \rightarrow$ Equal Waveform to Original \\
+        Compression $> 1 \rightarrow$ Smaller Waveform than Original
+    \end{center}
+    Codewise, the compression is given by dividing the input time array of the waveform (total time) by the compression factor:
+    \begin{minted}{python}
+        time_array / best_compression
+    \end{minted}
+    For a time array that spans 0 to 19.38 $\mu$s, for example, a compression of 20x would be:
+    \begin{center}
+        $\dfrac{19.38 \mu s}{20} = 0.969 \mu s$
+    \end{center}
+    This means the new temporal length of the waveform would be 0.969$\mu$s.
+\end{definition}
+
+\begin{definition}
+     \textbf{Padding:} The padding is applied on both edges of the waveform, extending its entire length. This is done because the precompensated waveform has edge ringing values. These values arise from there being nothing to precompensate on the ends of the function, and thus need to be suppressed. 
+    \begin{center}
+        Larger Padding $\rightarrow$ Larger Waveform \\
+        Smaller Padding $\rightarrow$ Smaller Waveform
+    \end{center}
+\end{definition}
+Since the goal is to reduce the length of the waveform, the padding should be reduced as much as possible to account for just the edge ringing. In the code, the padding is added to the original waveform at the start, and the ringing edges of the precompensated waveform are then suppressed for the padded values.
+
+\begin{definition}
+     \textbf{Error:} The error between the original waveform and the precompensated filtered (estimated original) is calculated over the entire waveform, on a case-by-case basis (not taken over multiple runs). The goal is to minimize the error between the two waveforms, making the estimation as close as possible to the original. There are two kinds of errors that are tracked. 
+     
+     The first and most important is the maximum absolute error, which corresponds to the largest error point at a certain time for the entire waveform. Graphically, this point is where the two estimated and original waveforms overlap, so minimizing the maximum absolute error means a closer estimation. This error is minimized in the optimization step to get higher accuracy estimation waveforms.
+\\
+     The second error briefly mentioned in plots and printed outputs is the rmse, which is the root mean squared error of the complete function. This is the root of the mean squared error over the entire function. This value generally decreases when the maximum absolute error decreases.
+\end{definition}
+
+\begin{definition}
+    \textbf{Regularization:} The regularization term is explained in detail during the precompensation step of the filter algorithm. Simply, however, it ensures that there is no division by zero during the precompensation mathematics. For different waveform sizes and shapes, the best regularization value extends from $1e^{-1}$ to $ke^{-n}$, and varies on a case-by-case basis. In the algorithm, the best regularization in dependence on the padding and compression values is found through optimization, which is mentioned later.
+\end{definition}
+
+\section{The Algorithm}
+\subsection{Filter Simulation Class}
+The filter simulation class is responsible for filtering and precompensating the input waveforms. This starts with setting up the input time and waveform arrays, and getting the input filter kernel. With the input data in place, the waveform can then be run through the filter, and interpolated to match the length of the time array. At the heart of the algorithm is the precompensation step, which estimates the correct precompensated waveform based on the effect of the filtering. The edge ringing of the precompensated waveform is suppressed by setting these edge values to a constant value, and then the final waveform is plotted.
+\subsubsection{Importing Libraries}
+
+The first step is to import the necessary libraries for the FilterSimulation class.
+
+\begin{minted}{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.fftpack import fft, ifft
+from scipy.interpolate import interp1d
+import seaborn as sns
+from sklearn.metrics import mean_squared_error
+import matplotlib.patches as patches
+import matplotlib.colors as mcolors 
+\end{minted}
+
+Numpy is used very often for constructing arrays, operations, and mathematics. Matplotlib is used to plot results. Scipy applies advanced mathematical operations such as the Fourier transform and interpolation on the precompensated waveform (this is explained in the precompensation section). Seaborn and sklearn are used in plotting and as metrics with which the waveform will be optimized (more on this in the Optimize class section).
+
+\subsubsection{Filter Method}
+
+After importing, the FilterSimulation() class is defined. The first method mentioned sets up the filter kernel through which the waveforms will be passed. The given filter kernel corresponds to a low-pass FIR filter used experimentally in the red trap quantum computer. 
+\\
+The input data type for the given filter kernel is an array of its coefficients. The associated filter kernel weights for the red trap's filter are given by the graph below:
+
+\begin{figure}[h!]
+    \centering
+\includegraphics[width=1\linewidth]{Figures/kernel.png}
+    \caption{Kernel weights for the FIR filter. These weights correspond to the filtering behavior on the waveforms passed through the electrodes in the red trap.}
+\end{figure} \label{kernel}
+
+In the filter() method, the weights are first loaded from an npy file as a step response:
+
+\begin{minted}{python}
+    def filter(self):
+        step_response = np.load('filter_data.npy')
+\end{minted}
+
+Then, the impulse response is defined and returned. The impulse response describes how the step response reacts to the input waveform. It is the way filtering affects the later detailed precompensation function.
+
+\begin{minted}{python}
+    impulse_response = np.diff(step_response, prepend = 0)
+    return impulse_response
+\end{minted}
+
+\subsubsection{The Setup}
+With the filter kernel defined, the time scale and waveform arrays can be input. It is important to note here that there are some important initial parameters to clarify. 
+\\
+The time step value, which corresponds to the DAQ's minimum sampling time between varying voltage points, is a lower bound restriction on the resolution of the signal. Smaller time steps allow more data points in the given waveform range, leading to higher accuracy. It is important to know the limitations of the hardware in the simulation. In the red trap's hardware, the DAQ has a sampling rate corresponding to 380 ns, which sets the time step value in this code.
+\\
+Additionally, the step size of the waveform (height in volts) is another input factor. The given waveform in this code has a step size of 6 volts, which corresponds to how much the voltage varies over transport.
+
+Both of these parameters are given below:
+
+\begin{minted}{python}
+# input values:
+waveform_size = -6 # volts
+time_step = 0.38 # DAQ lower limit
+\end{minted}
+
+Next comes the input time array and waveform data. Both of these values can range in length, but must match in order for the plotting to align. In the given case, both of these values have a length of 51.
+
+\begin{minted}{python}
+time_array = np.array([0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18,
+0.2, 0.22, 0.24, 0.26, 0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.46, 
+0.48, 0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7, 0.72, 0.74, 
+0.76, 0.78, 0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1])
+
+waveform = np.array([-1, -0.9990133642, -0.9960573507, -0.9911436254, 
+-0.9842915806, -0.9755282581, -0.9648882429, -0.9524135262, -0.93815334, 
+-0.9221639628, -0.9045084972, -0.8852566214, -0.8644843137, -0.842273553, 
+-0.8187119949, -0.7938926261, -0.7679133975, -0.7408768371, -0.7128896458, 
+-0.6840622763, -0.6545084972, -0.6243449436, -0.5936906573, -0.5626666168, 
+-0.5313952598, -0.5, -0.4686047402, -0.4373333832, -0.4063093427, 
+-0.3756550564, -0.3454915028, -0.3159377237, -0.2871103542, -0.2591231629, 
+-0.2320866025, -0.2061073739, -0.1812880051, -0.157726447, -0.1355156863, 
+-0.1147433786, -0.0954915028, -0.0778360372, -0.06184666, -0.0475864738, 
+-0.0351117571, -0.0244717419, -0.0157084194, -0.0088563746, -0.0039426493, 
+-0.0009866358, 0]) + 1
+\end{minted}
+
+A '+1' factor is added to the end of the waveform to ensure that the signal begins at zero--otherwise, the precompensation algorithm strays from the input waveform.
+\\
+The time array is normalized to a length of one. The total length of the filter can be calculated by multiplying the waveform length by that of the time step:
+
+\begin{center}
+    $51 \times 380ns = 51 \times 0.38 \mu s = 19.38 \mu s$
+\end{center}
+
+In code, this is:
+
+\begin{minted}{python}
+total_time = len(waveform) * time_step # 19.38 microseconds, NOT 17.5 microseconds
+\end{minted}
+
+Then the number of samples is the length of the waveform, which is 51:
+
+\begin{minted}{python}
+num_samples = int(total_time / time_step) # len(waveform)
+\end{minted}
+
+The time array and waveform can now be scaled up to the desired size:
+
+\begin{minted}{python}
+time_array *= total_time
+waveform *= waveform_size
+\end{minted}
+Mathematically, this is:
+\begin{center}
+    time array: $(0, 1) \rightarrow (0, (1 \times 19.38 )) \rightarrow (0, 19.38)$ in $\mu$s
+    \\
+    waveform: $(0, 1) \rightarrow (0, (1 \times 6)) \rightarrow (0, 6)$ in volts
+\end{center}
+
+This gives a time scale of 0 to 19.38 $\mu$s and a waveform with 51 points, all spaced at distances of 380 ns.
+\\
+Next, these values are input to the optimizer to find the best padding size, compression factor, and regularization value that yield the lowest error. This is explained more in the Optimize section later on. For now, the best parameters are taken to complete the setup step.
+\\
+To structure the input waveform and time array properly to allow for accurate filtering and precompensation, the setup method in the Filter Simulation class is passed:
+
+\begin{minted}{python}
+original, time, dt, first_index, last_index = FilterSimulation().setup(time_array 
+/ best_compression, waveform, best_compression, num_samples, best_padding)
+\end{minted}
+
+This outputs the original waveform, the time, which is an extension of the time array that matches the original waveform, the rate of change, which is dt, and the first and last indices of the original waveform.  The next step is to look at the contents of the setup and how it retrieves these values.
+
+\begin{minted}{python}
+def setup(self, time_array, waveform, compression, num_samples, padding):
+\end{minted}
+
+The setup method takes in the time array (which can be compressed depending on the compression factor), the waveform, the number of samples, and the padding factor. As mentioned previously, the padding and compression factors are found through optimization and are discussed in more detail later on.
+\\
+It starts by creating a proper time axis from 0 to the last index of the time array, with the same number of samples as the waveform has.
+
+\begin{minted}{python}
+    dense_time = np.linspace(0, time_array[-1], num_samples)
+\end{minted}
+
+Then, the waveform is interpolated over the time axis values with x-coordinates being the compressed time array and y-coordinates being the waveform array.
+
+\begin{minted}{python}
+    dense_waveform = np.interp(dense_time, time_array / compression, waveform)
+\end{minted}
+
+Next the dense waveform is set to the original waveform, which will be used in the algorithm. This is done by adjusting the edge padding of the waveform to practically extend the first and last indices by an amount that is given by the optimizer. As mentioned in the terminology section, the larger the padding, the longer the waveform. We do not want this to happen, so we optimize padding to as small a value as can just mitigate the precompensation edge ringing.
+
+\begin{minted}{python}
+    original = np.pad(dense_waveform, pad_width = best_compression, mode = 'edge')
+\end{minted}
+
+Next the time axis is sliced to the length of the original waveform if it is larger than the original. This ensures that plotting aligns axes. Then, the dt value, the difference between 2 samples or the rate of change of the time axis is found. This is our 0.38 $\mu$s from earlier. To construct the final time array, the array is arranged with the length of the original function and points spaced out at dt intervals. In our experiment, with a waveform length of 51 and dt of 0.38 $\mu$s we have a total length of 19.38 $\mu$s, which matches our result from the beginning of the section.
+
+\begin{minted}{python}
+    time_sliced = dense_time[:len(original)]
+    dt = time_sliced[1] - time_sliced[0]
+    time = np.arange(len(original)) * dt
+\end{minted}
+
+The first and last indices of the waveform are important for the later used trimming function, which does the actual edge ringing suppression of the precompensated waveform. These value are also calculated, and everything is then returned.
+
+\begin{minted}{python}
+    first_index = original[0]
+    last_index = float(original[-1])
+
+    return original, time, dt, first_index, last_index
+\end{minted}
+
+\subsubsection{Convolution "Filter Simulation"}
+
+The next important step is to actually simulate the effect of the filter on the original input waveform. This is done by a method from the FilterSimulation() class called convolution(waveform). It is called with:
+
+\begin{minted}{python}
+    filtered = FilterSimulation().convolution(original)
+\end{minted}
+
+This returns the filtered waveform. Taking a look at the actual contents of the convolution shows its relation to the specific FIR filter coefficients from the Filter Kernel section.
+
+\begin{minted}{python}
+    def convolution(self, waveform):
+        impulse_response = self.filter()
+        filtered_waveform = np.convolve(waveform, impulse_response, mode = 'full')
+        return filtered_waveform
+\end{minted}
+
+First, the impulse response is defined, which is retrieved from the filter method. As detailed previously, this method sets up the filter kernel depending on the input coefficients. The impulse response shapes how the convolution works, and is based upon the filter kernel. Then, numpy's convolve() method is used on the waveform with the given impulse response. The mode 'full' ensures that the convoluted waveform's size is not warped, which would significantly distort the waveform in relation to the time axis. The output filtered waveform is then returned.
+
+\subsubsection{Interpolation Method}
+
+This output waveform is shifted from the time axis in some way after the convolution operation, so it is "reanchored" to the current time axis by creating a shifted time array, and interpolating over the time axis values, with the x-axis being the shift and the y-axis being the filtered waveform.
+
+\begin{minted}{python}
+    shift_f = np.arange(len(filtered)) * dt
+    filtered = FilterSimulation().interpolation(time, shift_f, filtered)
+\end{minted}
+
+This calls the Filter Simulation's interpolation method. The precompensated and precompensated filtered waveforms must also be interpolated for the same reason as mentioned above (time axis shifts), so this method is created for cleanliness. 
+
+\begin{minted}{python}
+    def interpolation(self, time, shift, filtered):
+        interp_func = interp1d(shift, filtered, kind='cubic', bounds_error=False, 
+            fill_value="extrapolate")
+        filtered_interp = interp_func(time)  # Now same length as time_original
+        return filtered_interp
+\end{minted}
+
+Note that the interp1d() function from scipy is called, which is different than np.interp(). The scipy interp1d() constructs a function that estimates values between a set of known data points--in this case, between the shift and filtered arrays. The 'cubic' kind is the shape of the interpolation, and is smoother than other kinds, like 'linear'.
+
+\subsubsection{The Filter Precompensation}
+
+The main charm of this algorithm lies in the mathematics of the precompensation. As explained earlier, the original waveform is distorted (convoluted) when it undergoes filtering. To combat this, the waveform is precompensated to take on a different input shape so that the output matches the original waveform. 
+\\
+The key point to precompensation and having to estimate the original waveform with a margin of accuracy arises from the fact that the function is injective. This means that it is not invertible, and you cannot restore its input based on the output. To estimate this function, a series of Fourier transformations in the frequency domain. 
+
+The precompensation is called with:
+
+\begin{minted}{python}
+    precompensated = FilterSimulation().precompensation(original, last_index, 
+        best_reg_strength, best_padding)
+\end{minted}
+
+Inside the actual precompensation method, the impulse response is first retrieved from the filter method, similar to what is done earlier.
+
+\begin{minted}{python}
+def precompensation(self, waveform, last_index, reg_strength, best_padding):
+    impulse_response = self.filter()
+\end{minted}
+
+Since the original waveform is now padded, the impulse response must know how to work the greater-length waveform, and the inputs are both padded to sync their length. 
+
+\begin{minted}{python}
+    total_length = len(impulse_response) + len(waveform)
+    ir_padded = np.pad(impulse_response, (best_padding, total_length - 
+        len(impulse_response) - best_pading), mode='constant')
+    waveform_padded = np.pad(waveform, (best_padding, total_length - 
+        len(waveform) - best_pading), mode='constant', constant_values=last_index)
+\end{minted}
+
+After this initial setup step begins the pure mathematics. The function is now ready to begin the precompensation estimation.
+\\
+Let $h(t)$ be the function of the original waveform, $g(t)$ be the effect of the filter on the input waveform, and $f(t)$ be the output convoluted waveform. Then, the relation below becomes apparent:
+
+\begin{equation}
+    f(t) = g(t) * h(t)
+\end{equation}
+
+Here, the $*$ corresponds to the \textit{convolution} operation of the filter on the input waveform. This corresponds perfectly to the convolution() method defined earlier to simulate the filter effect.
+\\
+Codewise, we set the padded waveform to the input $h(t)$ value:
+
+\begin{minted}{python}
+    h_t = waveform_padded
+\end{minted}
+
+Since the mathematics is being done in the frequency domain, the complex transfer function of the filter $G(\omega)$ (called G in the code) is given by: 
+
+\begin{minted}{python}
+    G = fft(ir_padded)
+\end{minted}
+
+As one can see, the complex transfer function of the filter directly relates the filter's effect to the padded impulse response, where the filter kernel comes into play. 
+\\
+Here, another realization arises, since $g(t)$ is the effect of the filter function, and $G(\omega)$ is the complex transfer function of the filter.
+
+\begin{equation}
+    g(t) = F^{-1}(G(\omega))
+\end{equation}
+
+This fact is useful in the grand scheme of the mathematics. If we know how we want the output waveform $f(t)$ to look (like the original signal), then the precompensated waveform to solve for is $h(t)$. For this reason, we isolate and solve for the correct precompensation waveform that yields the original waveform after convolution.
+
+\begin{equation}
+    h(t) = F^{-1}\biggr(\frac{F(\omega)}{G(\omega)}\biggr) = F^{-1} \biggr(\frac{F(f(t))}{G(\omega)}\biggr)
+\end{equation}
+
+The code then follows with taking the fourier transform of $f(t)$, which will be called $F(\omega)$:
+
+\begin{minted}{python}
+    h_w = fft(h_t)
+\end{minted}
+
+There is a big problem here. If any of the complex transfer function's values are zero, the value of $h(t)$ becomes undefined. This is because $G(\omega)$ is in the denominator. To ensure this never happens, the function undergoes regularization, which prevents division by zeros or near-zeros.
+
+\subsubsection{Tikhonov Regularization}
+
+In the precompensation algorithm, we invert the filter transfer function $G(\omega)$ to compute the input waveform $h(t)$ that will produce a desired output after filtering. To avoid getting close to or being zero, $G(\omega)$ is regularized. This begins by defining the complex transfer function in terms of its amplitude attenuation $A(\omega)$ and phase $\phi(\omega)$.
+
+\begin{equation}
+    G(\omega) = A(\omega)e^{i \phi(\omega)}
+\end{equation}
+
+In the code, numpy's abs() and angle() methods are used.
+
+\begin{minted}{python}
+    G_magnitude = np.abs(G) # amplitude attenuation
+    G_phase = np.angle(G) # phase shift
+\end{minted}
+
+As noted above, the filter inversion becomes unstable when $G(\omega)$ is very small (at frequencies strongly attenuated by the filter). Here, dividing by zero leads to large amplification of noise or numerical artifacts (excess ringing) in the precompensated signal.
+\\
+Tikhonov regularization stabilizes signals at high frequencies that cause near-zero function values. This technique is demonstrated in our setup using the Tikhonov regularization equation below:
+
+\begin{equation}
+    H(\omega) = \dfrac{F(\omega) \cdot G^*(\omega)}{|G(\omega)|^2 + \lambda}
+\end{equation}
+
+The $\lambda$ value here corresponds to the regularization strength, called $reg_strength$ in the code. It is a small positive constant that stabilizes the inversion, and can be tuned to a certain value (usually in the range $e^{-5}$ to $e^{-1}$ for the best precompensation fit. This tunable parameter is optimized in the Optimizer for this reason, which is detailed in the later Optimize class section.
+\\
+Tikhonov regularization suppresses high-frequency components that interfere with the precompensated waveform, and provides a controlled trade-off between exact inversion and smoothness of the precompensated waveform.
+
+In the precompensation method, this step is given by:
+
+\begin{minted}{python}
+    regularized_magnitude = G_magnitude / (G_magnitude**2 + reg_strength)
+    regularized_G = regularized_magnitude * np.exp(-1j * G_phase)
+\end{minted}
+
+Here, the amplitude attenuation and phase shift become apparent. Mathematically speaking, these lines correspond to:
+
+\begin{equation}
+    \biggr( \dfrac{A(\omega)}{A(\omega)^2 + \lambda} \biggr) \cdot e^{-i \cdot \phi(\omega)}
+\end{equation}
+
+With this regularized value of $G(\omega)$, the Fourier transfomation sequence can be completed:
+
+\begin{minted}{python}
+        f_w = h_w * regularized_G
+        f_t = np.real(ifft(f_w))
+
+        return f_t
+\end{minted}
+
+Thus, the correct output $f(t)$ is found. This function represents the precompensated waveform that returns the original input waveform with the degree of accuracy determined by the regularization trade-off (larger regularization means smoother function, and smaller regularization means higher frequency spikes).
+
+\subsubsection{Trimming Method}
+
+Before the precompensated waveform is fully ready for use, it still has one more problem: edge ringing. As mentioned previously edge ringing on the precompensated waveform occurs because there is no waveform to precompensate on the ends of the function. This is suppressed by padding the original waveform's edges by a constant value matching that of the first and last indices. Over these extended edges, precompensated waveform's (ringing) values are suppressed. The trimming method is responsible for this suppression.
+\\
+First, the precompensated waveform is sliced to the length of the original to ensure matching lengths, and then the the method:
+
+\begin{minted}{python}
+    precompensated = precompensated[:len(original)]
+    precompensated = FilterSimulation().trimming(precompensated, best_padding, 
+        first_index, last_index)
+\end{minted}
+
+As mentioned in the setup section, this is where the first and last index values of the original waveform become important.
+\\
+From the beginning of the precompensated waveform (index zero) to the end of the padded segment, the precompensated array is set to a constant value of the first index. The same is done for the end, with the padded end period.
+
+\begin{minted}{python}
+def trimming(self, precompensated, best_padding, first_index, last_index):
+        for i in range(0, int(best_padding*0.3)):
+            precompensated[i] = first_index      
+        for i in range(len(precompensated) - int(best_padding*0.5), 
+            len(precompensated)):
+            precompensated[i] = last_index
+        return precompensated
+\end{minted}
+
+Notice that there is one explicit difference that is added to the code. This is the 'tuning' parameter in the trimming function. For the beginning padding segment, instead of going from the beginning of the signal all the way up to the end of the padding period, the suppression only goes up to the 0.3 of the way. This is because of the behavior of the precompensation waveform.
+\\
+In order to overcompensate accurately, the waveform begins to take shape before the start of the original waveform, meaning that it cuts into the padding zone. The 0.3 is the real 'edge' of the precompensated waveform, where the edge artifacts (ringing) become apparent.
+\\
+A similar reason is given to the ending pad segment, but the waveform only starts to produce ringing 0.5 the way of the padded segment--suppressing it any earlier would warp the effect of the precompensation.
+
+\subsubsection{Filtering the Precompensated Waveform}
+
+With a fully precompensated waveform, simulating this new input through the filter simulation provides a precompensated filtered waveform. This is the end result, and should be optimized to attain an estimation with as minimal error as possible to the original, unfiltered input waveform.
+\\
+This begins by running the precompensated waveform through the convolution method, just like the filtered waveform.
+
+\begin{minted}{python}
+precompensated_filtered = FilterSimulation().convolution(precompensated)
+\end{minted}
+
+As mentioned previously, the convolution can distort the waveform, which calls for interpolation to realign the waveform with the central time axis. The same process is used for the precompensated filtered waveform.
+\begin{minted}{python}
+shift_p = np.arange(len(precompensated_filtered)) * dt
+precompensated_filtered = FilterSimulation().interpolation(time, shift_p,
+precompensated_filtered)
+\end{minted}
+
+The same steps are applied to also visualize the precompensated waveform before filtering.
+
+\begin{minted}{python}
+shift_p_unfiltered = np.arange(len(precompensated)) * dt
+precompensated_unfiltered = FilterSimulation().interpolation(time, 
+shift_p_unfiltered, precompensated)
+
+\end{minted}
+
+The result is four waveforms: original, filtered, precompensated unfiltered, and precompensated filtered. These can be visualized through matplotlib plotting.
+
+\subsubsection{Plotter Method}
+
+The plotter method takes the four different waveforms and the cohesive time axis and plots them together. The convoluted waveform is shallower than the original and starts later, while the precompensated unfiltered waveform starts before the original. The hope is to maximize overlap between the original and precompensated filtered waveforms. 
+
+The plotter method is first called:
+
+\begin{minted}{python}
+    FilterSimulation().plotter(original, time, filtered, precompensated_unfiltered, 
+        precompensated_filtered)
+\end{minted}
+
+As seen, it takes in the 4 waveforms and the time axis. Inside the method, all four waveforms are plotted on the central time axis and are labeled accordingly.
+
+\begin{minted}{python}
+def plotter(self, original, time, filtered, precompensated_unfiltered, 
+precompensated_filtered):
+    plt.figure()
+    plt.plot(time, original, label = 'Original')
+    plt.plot(time, filtered, label = 'Filtered')
+    plt.plot(time, precompensated_unfiltered, label = 'Precompensated Unfiltered', 
+        linestyle = '--')
+    plt.plot(time, precompensated_filtered, label = 'Precompensated Filtered', 
+        linestyle = '--')
+\end{minted}
+
+The time is still in $\mu$s, which is on the x-axis, and the y-axis is in volts.
+
+\begin{minted}{python}
+    plt.title('Filter Waveforms')
+    plt.xlabel('Time in µs')
+    plt.ylabel('Voltage')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+\end{minted}
+
+The result of this algorithm is shown below, after running the plotter method at the end of the code. These results correspond to the aforementioned filter kernel, time array, and waveform input. The padding and regularization strength $\lambda$ are optimized later on but are set to a constant value for simplicity in explanation here. Compression is not yet applied here.
+
+\begin{figure}[h!]
+    \centering
+\includegraphics[width=1\linewidth]{Figures/example1.png}
+    \caption{A simple example of applying the filter simulation algorithm on an input waveform.}
+\end{figure} \label{example1}
+
+The specific given values for this result are listed below:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Input Waveform Array & [-1, -0.9990133642, ..., 0] + 1 \\ 
+  \hline
+  Input Time Array & [0, 0.02, ..., 1] \\ 
+  \hline
+  Filter Kernel Coefficients & [4.65175217e-05, ..., 1.00004649e+00] \\ 
+  \hline
+  Minimum DAQ Step & 380 ns \\ 
+  \hline
+  Total Duration & 19.38 $\mu$s \\ 
+  \hline
+  Waveform Size & 6 volts \\ 
+  \hline
+  Padding & 30 \\ 
+  \hline
+  Regularization Strength & 5e-05 \\ 
+  \hline
+  Min/Max Voltage Strength & $\pm 40$ volts \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+Here, the calculated error is:
+
+\begin{minted}{python}
+Root Mean Squared Error (RMSE): 0.15461 V
+Max Absolute Error: 0.28321 V
+\end{minted}
+
+Graphically, the maximum absolute error over time is represented as follows.
+
+\begin{figure}[h!]
+    \centering
+\includegraphics[width=1\linewidth]{Figures/example1error.png}
+    \caption{A simple example of applying the filter simulation algorithm on an input waveform.}
+\end{figure} \label{example1error}
+
+As seen, the peak error is at 0.28321 volts, a bit above 0.25 volts. The root mean square error (rmse) takes the root of the average error, and is always lower than the max absolute error. The smaller the error margin (of rmse and max absolute error), the greater the accuracy of the estimated precompensated waveform, and the greater the overlap between the original (blue) and precompensated filtered (red) waveforms.
+
+\subsection{Optimize Class}
+
+The optimize simulation class optimizes the precompensated waveform to achieve:
+
+\begin{enumerate}
+    \item As low an error margin as possible $\rightarrow$ best precompensation approximation of original waveform
+    \item As small a waveform as possible $\rightarrow$ faster transport sequences
+\end{enumerate}
+
+Optimizing the waveform provides a roadmap to understanding the boundaries and limitations of the precompensation approach taken in this paper. It provides a threshold given by the varying parameters that are finely tuned for filter optimization:
+
+\begin{itemize}
+    \item Minimize \textbf{padding} $\rightarrow$ smaller waveforms
+    \item Maximize \textbf{compression} $\rightarrow$ smaller waveforms
+    \item Minimize \textbf{max absolute error} (consequently rmse) $\rightarrow$ more accurate waveforms
+    \item Find best \textbf{regularization strength} $\rightarrow$ more accurate waveforms
+\end{itemize}
+
+These parameters are further detailed in the terminology section at the beginning of this paper. The optimization class has several methods for plotting relevant data (such as the error plot from the section above), along with a main, large method that approximates the best parameters depending on an input waveform and tunable weights.
+
+\subsubsection{Parameters and Optimization Logic}
+
+The algorithm finds the best matching case according to the weight of three main parameters: max absolute error (alpha), padding (beta), and compression (gamma).
+\\
+Each parameter is given a tunable \textit{weight} according to its relevance in the result. For example, to get a waveform with minimal max absolute error, one has to increase the weight on alpha, which yields a more accurate precompensation at the stake of a larger function. Exploring the effect of different weights helps demonstrate the tradeoff between waveform size and waveform accuracy, and the true "estimation" limitation of the precompensated waveform.
+\\
+In code, the class is defined and initial parameters are attributes of the class, as follows:
+
+\begin{minted}{python}
+class Optimize:
+        
+    def __init__(self):
+        self.padding_range = list(range(xx, xx))
+        self.reg_exponents = list(range(-x, x))      
+        self.reg_coeff = list(range(xx, xx))
+        self.compression_range = list(range(xx, xx))
+        
+        self.lower_voltage_bound = -40
+        self.upper_voltage_bound = 40
+
+        self.alpha = xx.xx # max abs error
+        self.beta = xx.xx # padding
+        self.gamma = xx.xx # compression
+\end{minted}
+
+The values marked with x or xx are variable parameters that are to be tuned depending on the waveform. Usually regularization is between 9e-1 to 1e-6. Padding also ranges, and usually falls between 20 and 100 sample units. 
+
+The weights alpha, beta, and gamma are also defined here. 
+\\
+The range of the padding and compression corresponds to how many values the optimizer should test. Larger ranges mean a longer runtime, so it is best to benchmark the waveform for appropriate padding and compression values beforehand, to get a general feel for its limits.
+\\
+The weighted parameters are summed up to a penalty value. The penalty value for each combination of parameters in the given range is stored, and the lowest penalty is chosen at the end of the loop to yield the best result.
+\\
+Additionally, the lower and higher voltage bounds that are restricted by the hardware of the device are also defined attributes. Together, these values are constantly used in the Optimize class, and set up the initial tweakable bounds for the behavior of the methods in the class.
+
+\subsubsection{Optimizer Method}
+
+The optimizer method is the heart of the optimize class. It was briefly mentioned before the setup method of the filter simulation class, as this is where it is located in the code.
+
+\begin{minted}{python}
+...
+waveform *= waveform_size
+
+best_error_grid, bounds_grid, best_compression, best_padding, best_reg_strength = 
+Optimize().optimizer(waveform, time_array, num_samples) # the method of focus
+    
+Optimize().heatmap(best_error_grid, bounds_grid, best_padding, best_reg_strength, 
+...
+\end{minted}
+
+The optimizer method takes in the initial waveform and time arrays before properly setting them up as the original waveform and time axis. This is because the parameters need to be found before the original waveform--which is padded and compressed by a certain degree--can be set up. Output are the best compression, padding, and regularization values, plus two additional values used to plot results (used by other methods in Optimize).
+\\
+The optimizer method is defined below, and some initial variables are defined:
+
+\begin{minted}{python}
+def optimizer(self, waveform, time_array, num_samples):
+    best_penalty = float('inf')
+    best_params = (None, None, None, None, None) # compression, padding, 
+    reg_strength, penalty, bounds
+    all_best_params = []
+    reg_array = []
+
+    compression_grids = {}
+\end{minted}
+
+Initially, the best penalty is set to infinity, so that later in the code, the first iteration will take the place of the best penalty thus far. Any penalty smaller than the initial run is then tracked, and at the end, all tracked penalties are compared to find the absolute minimum penalty case.
+\\
+The second defined variable is a blueprint of the five parameters to be stored for the tracked best penalty case scenarios. The five values to be stored are the compression, padding, regularization strength, calculated penalty (where the weight comes into play), and the bounds (checks voltage bounds). If the voltage of the precompensated waveform reaches above 40 volts or below -40 volts for a certain parameter combination, that result is voided. This is done by setting the bounds for all voided results to one, and all inclusive results to zero. The function later checks the bound value first, to further decrease the sample size, it needs to search for the lowest penalty.
+\\
+The best parameters with respect to the run are saved in a variable as well as the regularization coefficient $c$ corresponding to the current regularization exponent $n$. These values are later used to construct the full regularization strength $c \; \cdot 10^{-n}$.
+\\
+For the later mentioned heatmap method, an error grid and bounds grid are also created. The error grid finds the magnitude of the absolute max error per combination for a set of padding and regularization values. The bounds grid shows for which combinations the results are out of the hardware range of $\pm 40$ volts. Each run has a corresponding error and bound grid, two arrays which are stored in the compression grid dictionary below:
+
+\begin{minted}{python}
+    compression_grids = {}
+\end{minted}
+
+Furthermore, the compression grid iterates over all regularization strengths and padding values for a specific compression. Since the heatmap is two-dimensional, only the heatmap corresponding to the resulting chosen compression value is displayed. This means first defining the compression range, and nesting the grids inside of this compression, but before the regularization and padding ranges are defined.
+
+\begin{minted}{python}
+    # generate all possibilities:
+    for k, compress in enumerate(self.compression_range):
+
+        error_grid = np.full((len(self.padding_range), len(self.reg_exponents) * 
+            len(self.reg_coeff)), np.nan)
+        bounds_grid = np.full((len(self.padding_range), len(self.reg_exponents) * 
+            len(self.reg_coeff)), np.nan)
+        
+        for i, padding in enumerate(self.padding_range):
+            reg_index = 0
+            for j, reg in enumerate(self.reg_exponents):
+                for l, coeff in enumerate(self.reg_coeff):
+\end{minted}
+
+In the example run, the following range values are used for the padding, regularization, and compression:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Padding Range & 6 $\rightarrow$ 61 \\ 
+  \hline
+  Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
+  \hline
+  Regularization Exponent & -6 $\rightarrow$ 0 \\ 
+  \hline
+  Compression Range & 1 $\rightarrow$ 2 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+With these ranges, the total combinations are:
+
+\begin{center}
+    $54 \cdot 6 \cdot 7 \cdot 19 = 44,688$ combinations total
+\end{center}
+
+Increasing the number of combinations also increases the processing time. A size of 44,688 combinations takes approximately 1.5 seconds to run, although this can vary for different hardware. For some large combination values, over 1 minute of computation time may be required.
+\\
+The central loop consists of three nested loops, starting with the regularization, inside padding, inside compression.
+
+\begin{minted}{python}
+    for k, compress in enumerate(self.compression_range):
+            for i, padding in enumerate(self.padding_range):
+                for j, reg in enumerate(self.reg_exponents):
+\end{minted}
+
+For each loop iteration, the code runs through a possibility for the precompensated waveform, changing the compression (k), padding (i) and regularization (j) values on each run, until all 44,688 cases are exhausted.
+\\
+As mentioned previously, the regularization exponent $n$ corresponds to the full regularization strength $c \cdot \; 10^{-n}$. Because of this, the full regularization strength, which is the value used in precompensation mathematics, is defined.
+
+\begin{minted}{python}
+    reg_strength = coeff * 10 ** reg
+\end{minted}
+
+Then, the code trials the current iteration case:
+
+\begin{minted}{python}
+    dense_time = np.linspace(0, time_array[-1], num_samples)
+    dense_waveform = np.interp(dense_time, time_array / compress, waveform)
+    original = np.pad(dense_waveform, pad_width=padding, mode='edge')
+    time_sliced = dense_time[:len(original)]
+    dt = time_sliced[1] - time_sliced[0]
+    time = np.arange(len(original)) * dt
+    first_index = original[0]
+    last_index = float(original[-1])
+    
+    precompensated = FilterSimulation().precompensation(original, last_index, 
+        reg_strength, padding)
+    precompensated = precompensated[:len(original)]
+    precompensated = FilterSimulation().trimming(precompensated, padding, 
+        first_index, last_index)
+    precompensated_filtered = FilterSimulation().convolution(precompensated)
+    shift_p = np.arange(len(precompensated_filtered)) * dt
+    precompensated_filtered = FilterSimulation().interpolation(time, shift_p, 
+        precompensated_filtered)
+\end{minted}
+
+This code is mentioned in more detail in the previous section on the filter simulation class, and will not be explained here.
+\\
+The next part of the method is interpreting the results. At the end of the iteration, the maximum absolute error between the original and precompensated filtered waveforms is calculated.
+\begin{minted}{python}
+    error = np.max(np.abs(original - precompensated_filtered))
+\end{minted}
+
+Then, the penalty calculator comes into play. As mentioned previously, the penalty is the sum of the weighted values, as given.
+
+\begin{center}
+    penalty = $\alpha \; \cdot$ error + $\beta \; \cdot$ padding + $\gamma \; \cdot$ compression
+\end{center}
+
+This is given by:
+
+\begin{minted}{python}
+    penalty = self.alpha * error + self.beta * padding - self.gamma * compress
+\end{minted}
+
+Now, four of the five stored values are filled. Lastly, the iteration needs to be checked to see if it is outside the voltage bounds.
+
+\begin{minted}{python}
+    if np.max(precompensated) > self.upper_voltage_bound or np.min(precompensated) 
+        < self.lower_voltage_bound:
+        bounds = 1
+    else:
+        bounds = 0
+\end{minted}
+
+If the maximum precompensated waveform (y-axis) value is over 40 volts or under -40 volts, the bound tally becomes 1 and will be further disregarded. Otherwise, the iteration is still valid.
+\\
+After calculating both the error amount and the bounds value for the given iteration, these contents are stored as indices in the respective grids. The regularization index keeps track of the iteration corresponding to the input values.
+
+\begin{minted}{python}
+    error_grid[i, reg_index] = error
+    bounds_grid[i, reg_index] = bounds
+    reg_index += 1
+\end{minted}
+
+Lastly, per iteration, the value of the best parameters is constructed. This conditional statement filters out any cases beyond the bounds by checking if the bounds value is one, which is the invalid case. The initially empty parameters array stores each current best value case. Each case is then reviewed later for the best absolute case. The current lowest penalty that passes the condition is then set to the next standard, filtering out cases that are not below the current threshold.
+
+\begin{minted}{python}
+    if bounds == 0:
+        if penalty < best_penalty:
+            best_penalty = penalty
+            best_params = (compress, padding, reg_strength, penalty, bounds)
+            all_best_params.append(best_params)
+\end{minted}
+
+To later plot the regularization strength axis, which depends both on the $c$ and $n$ values, the regularization array initially defined at the beginning of the function is filled with the values spanning the x-axis of the later used heatmap.
+
+\begin{minted}{python}
+    if len(reg_array) < (len(self.reg_coeff) * len(self.reg_exponents)):
+    reg_array.append(reg_strength)
+\end{minted}
+
+After the regularization and padding, nested loops have been exhausted, the compression grid dictionary is filled with the current compression iteration corresponding to the current error grid and bound grid. This can be thought of as a "snapshot" of the heatmap for each compression value, and the best case is then returned.
+
+\begin{minted}{python}
+    compression_grids[compress] = (error_grid.copy(), bounds_grid.copy())
+\end{minted}
+
+After all iterations are complete, the best cases are reviewed based on their penalty value. In the case that no valid result passed the bounds test and the function fails, an error message is displayed. Otherwise, the lowest penalty case is found, as the goal is to minimize the penalty as much as possible. This optimal case is then chosen as the best overall case.
+
+\begin{minted}{python}
+    valid_results = [res for res in all_best_params if res[4] == 0]
+        if not valid_results:
+            print("No valid results found within bounds! 
+                Returning least-penalty violating case.")
+            best_params = min(all_best_params, key=lambda x: x[3])
+        else:
+            best_params = min(valid_results, key=lambda x: x[3])
+
+        return compression_grids, best_params, reg_array
+\end{minted}
+
+Lastly, the grids for the heatmap are returned, the best parameters, which store the values corresponding to the optimal case, and the regularization axis.
+
+\begin{minted}{python}
+    return compression_grids, best_params, reg_array
+\end{minted}
+
+\subsubsection{Heatmap Method}
+
+After the optimizer method, which does the heavy lifting for optimization, the results need to be viewed and verified. The values returned from the optimizer are next fed into the heatmap method:
+
+\begin{minted}{python}
+    Optimize().heatmap(compression_grids, best_params, reg_array)
+\end{minted}
+
+Here, the compacted best parameter value and compression dictionary are expanded to represent their nested values for the best case iteration.
+
+\begin{minted}{python}
+        def heatmap(self, compression_grids, best_params, reg_array):
+            best_compression = best_params[0]
+            best_padding = best_params[1]
+            best_reg_strength = best_params[2]
+            error_grid, bounds_grid = compression_grids[best_compression]
+\end{minted}
+
+In the example case, the returned values are represented below:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Best Padding & 31 \\ 
+  \hline
+  Best Regularization Coefficient & 5 \\ 
+  \hline
+  Best Regularization Exponent & -5 \\ 
+  \hline
+  Best Compression Value & 1 \\ 
+  \hline
+  Best Penalty & 0.729 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+Then, these values are expected to be represented on the heatmap generated.
+\\
+The figure is generated as a 12 by 7 landscape-style graph, but these values can be adjusted depending on the given range size.
+
+\begin{minted}{python}
+    plt.figure(figsize = (12, 7))
+\end{minted}
+
+The seaborn (sns) library is used to generate this plot. The coolwarm colorscheme is also chosen. The x-axis represents the regularization strengths in scientific notation, and the y-axis represents the maximum absolute error difference between the original and precompensated filtered waveform. This difference is in volts.
+
+\begin{minted}{python}
+    cmap = sns.color_palette("coolwarm", as_cmap=True)
+    ax = sns.heatmap(
+        error_grid,
+        yticklabels = self.padding_range[::10],  # compression values
+        cmap = cmap,
+        cbar_kws = {'label': 'Error (in V)'},
+        annot = False, # set to true for values displayed on each cell
+        fmt = '.2e', # scientific notation format for annotations
+    )
+\end{minted}
+
+The bounds grid is also displayed, and grays out the iterations for which the results are beyond the bounds. The color value for these cells does not have a full opacity to demonstrate how the error hot spots would look for hardware that could potentially exceed the $\pm$ 40 volts boundary.
+
+\begin{minted}{python}
+    # gray overlay where bounds = 1:
+    overlay = np.where(bounds_grid == 1, 1, np.nan)
+    sns.heatmap(
+        overlay,
+        mask = np.isnan(overlay),
+        map = mcolors.ListedColormap([(0.5, 0.5, 0.5, 0.8)]),
+        cbar = False,
+        ax = ax
+    )
+\end{minted}
+
+The design code lines will not be discussed in detail, as they are standard from the seaborn library. The chosen best case iteration is highlighted in a golden frame, making it easy to tell what the optimizer chose as 'optimal'.
+
+\begin{minted}{python}
+    plt.title(f'Heatmap at Compression x{best_compression}')
+    plt.xlabel('Regularization Strength')
+    plt.ylabel('Padding Samples')
+
+    n_yticks = 7
+    ytick_positions = np.linspace(0, len(self.padding_range) - 1, n_yticks, 
+        dtype = int)
+    plt.yticks(ytick_positions, [self.padding_range[i] for i in ytick_positions])
+        
+    n_xticks = 12
+    xtick_positions = np.linspace(0, len(reg_array) - 1, n_xticks, dtype = int)
+    labels = [f'{coeff}e{exponent}' for exponent in self.reg_exponents for 
+        coeff in self.reg_coeff]
+    selected_labels = [labels[i] for i in xtick_positions]
+    plt.xticks(xtick_positions, selected_labels, rotation = 45)
+
+    ax.grid(False)
+    rect = patches.Rectangle((reg_array.index(best_reg_strength), 
+        self.padding_range.index(best_padding)), 1, 1, fill = False, 
+            edgecolor = 'gold', lw = 3)
+    
+    ax.add_patch(rect)
+    plt.tight_layout()
+    plt.show()
+\end{minted}
+
+Thus, the heatmap display is completed. Below is the output figure corresponding to the example case's outputs. The output values given in the aforementioned table above correspond perfectly with the highlighted optimal case, ensuring that the heatmap is showing the correct result.
+
+\begin{figure}[h!]
+    \centering
+\includegraphics[width=1\linewidth]{Results/Result_0_1v1/heatmap1v1.png}
+    \caption{The best compression value with the current set weights is 1. This results from having a much higher weight on low error rather than high compression. As seen in a later section, higher compressions generally lead to higher error rates, which further explains why the lowest possible compression (in this case, 1) is chosen. The padding rang,e as previously mentioned, is between 5 and 61, and the regularization strength is between 1e-6 and 7e-1. The blue areas correspond to fewer errors, and the red areas have the most errors (in terms of maximum absolute error per iteration). The grayed-out areas correspond to values outside the upper and lower voltage bounds of the function and cannot be accessed. The illuminated golden cell is the chosen "best case" of the general heatmap.}
+\end{figure} \label{heatmap1.1}
+
+As seen in the displayed heatmap, the selected optimal tile is at (5e-5, 31) with a maximum absolute error magnitude of 0.729 volts. For different weights, the selected tile would change; lighter weights on padding would present a darker blue, lower tile, while different values for compressions would show completely different heatmap snapshots. The main point here is that this result is quite tunable. Different alterations of parameters and consequently different output heatmaps are pondered in more depth in a later section.
+\\
+The heatmap is a great visualization of the developed optimization algorithm in practice, and it also showcases the options for precompensation. These options are further illustrated and explored in the other two Optimize methods: error_plotter and tradeoff\_plot.
+
+\subsubsection{Error Plotter Method}
+
+The error plotter, which was already showcased in the Plotter Method section to give an elaborate explanation of error in the results, is explained in detail here.
+\\
+The method begins by calling the following line of code:
+
+\begin{minted}{python}
+Optimize().error_plotter(time, original, precompensated_filtered, best_params)
+\end{minted}
+
+Like the heatmap method, it also decomposes the best parameters variable.
+
+\begin{minted}{python}
+def error_plotter(self, time, original, precompensated_filtered, best_params):
+\end{minted}
+
+The error plotter finds the values of rmse and maximum absolute error (which is the pointwise error per time point of the function).
+
+\begin{minted}{python}
+    rmse = np.sqrt(mean_squared_error(original, precompensated_filtered))
+    pointwise_error = np.abs(original - precompensated_filtered)
+            
+    best_compression = best_params[0]
+    best_padding = best_params[1]
+    best_reg_strength = best_params[2]
+    best_penalty = best_params[3]
+\end{minted}
+
+Next, the method plots the pointwise error concerning the time coordinate.
+
+\begin{minted}{python}
+    # absolute error over time:
+    plt.plot(time, pointwise_error, color='red', label='|Original - 
+        Precompensated Filtered|')
+    plt.title('Error between Original and Precompensated Filtered Signal')
+    plt.xlabel('Time in µs')
+    plt.ylabel('Absolute Error (V)')
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+\end{minted}
+
+Additionally, to verify the results of the heatmap match the correct error output, the values of padding, regularization, compression, penalty, rmse, and maximum absolute error are also printed.
+
+\begin{minted}{text}
+    print(f'The best padding is:', best_padding)
+    print(f'The best regularization is: {best_reg_strength:.0e}')
+    print(f'The best compression is: {best_compression}')
+    print(f'The best penalty is: {best_penalty}')
+    print(f"Root Mean Squared Error (RMSE): {rmse:.3f} V")
+    print(f"Max Absolute Error: {np.max(pointwise_error):.3f} V")
+\end{minted}
+
+The result corresponding to the example yields the following values (which are where the table values originate from):
+
+\begin{minted}{python}
+#The best padding is: 31
+#The best regularization is: 5e-05
+#The best compression is: 1
+#The best penalty is: 0.7289897979212718
+#Root Mean Squared Error (RMSE): 0.075 V
+#Max Absolute Error: 0.179 V
+\end{minted}
+
+Then, the corresponding error plot is also shown below:
+
+\begin{figure}[h!]
+    \centering
+\includegraphics[width=1\linewidth]{Results/Result_0_1v1/errorplot1v1.png}
+    \caption{The following plot shows the pointwise error graphically corresponding to the example run.}
+\end{figure} \label{errorplot1v1}
+
+The error plotter shows the difference in volts between the original and precompensated filtered waveforms at every instance in time. The maximum absolute error is the absolute peak (or maximum) of this graph, and visually shows the magnitude of the maximum error relative to the rest of the function. The root mean squared error (rmse), which is also printed in the chain of results, gives further context to the error plot. The difference in rmse and maximum absolute error gives insights on how sharp the error peak is. 
+\\
+So far, the results within the defined bounds have been showcased. The results thus far show the possibilities within the padding and regularization range (shown in the heatmap), and the error variance throughout the function (shown in the error plot). However, the compression result has been held constant. To fully demonstrate the effect of multiple compression values, and the heart of the tradeoff between error and waveform temporal length, the tradeoff plot method is utilized.
+
+\subsubsection{Tradeoff Plot Method}
+
+The tradeoff plot is at the heart of the tradeoff between precompensation error (always in max absolute) and temporal waveform size. As mentioned in the opening section of this paper, the goal of the precompensation optimization is to maximize the accuracy of the precompensated filtered waveform while minimizing its length, in order to speed up adiabatic shuttling transport operations.
+\\
+The method simply takes in the following parameters:
+
+\begin{minted}{python}
+Optimize().tradeoff_plot(time_array, num_samples, waveform, best_params)
+\end{minted}
+
+Some initial parameters defined, which are used to parameterize the for loop used and store iteration results.
+
+\begin{minted}{python}
+def tradeoff_plot(self, time_array, num_samples, waveform, best_params):
+    error_array = []
+    compression_array = []
+    best_padding = best_params[1]
+    best_reg_strength = best_params[2]
+\end{minted}
+
+The method by which the tradeoff is calculated over a range of compression values is very similar to the optimizer method detailed previously. For this reason, a thorough description of this piece of the method is left out.
+
+\begin{minted}{python}
+    for k, compress in enumerate(self.compression_range):
+        dense_time = np.linspace(0, time_array[-1], num_samples)
+        dense_waveform = np.interp(dense_time, time_array / compress, waveform)
+        original = np.pad(dense_waveform, pad_width=best_padding, mode='edge')
+        time_sliced = dense_time[:len(original)]
+        dt = time_sliced[1] - time_sliced[0]
+        time = np.arange(len(original)) * dt
+        first_index = original[0]
+        last_index = float(original[-1])
+
+        precompensated = FilterSimulation().precompensation(original, last_index, 
+            best_reg_strength, best_padding)
+        precompensated = precompensated[:len(original)]
+        precompensated = FilterSimulation().trimming(precompensated, best_padding, 
+            first_index, last_index)
+        precompensated_filtered = FilterSimulation().convolution(precompensated)
+        shift_p = np.arange(len(precompensated_filtered)) * dt
+        precompensated_filtered = FilterSimulation().interpolation(time, shift_p, 
+            precompensated_filtered)
+                        
+        error = np.max(np.abs(original precompensated_filtered))
+\end{minted}
+
+At the end of each iteration, the compression and consequent error values are stored for plotting.
+
+\begin{minted}{python}
+    compression_array.append(compress)
+    error_array.append(error)
+\end{minted}
+
+The plotting piece of the method is defined below:
+
+\begin{minted}{python}
+    plt.plot(compression_array, error_array)
+    plt.xlabel("Compression")
+    plt.ylabel("Max Absolute Error")
+    plt.title("Compression vs. Max Error")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+\end{minted}
+
+Below, the plot of compression to error is given, ultimately showcasing this tradeoff between error and time:
+
+\begin{figure}[h!]
+    \centering
+\includegraphics[width=1\linewidth]{Results/Result_0_1v1/tradeoffplot1v1.png}
+    \caption{The tradeoff between error values and waveform size is shown above. The range of values for this plot is given between a compression factor of 1 to 20, as this is where the rate of change of the error begins to settle. The maximum absolute error is around 11 volts, and spikes early on at around a compression factor of 4.}
+\end{figure} \label{tradeoffplot1v1}
+
+This tradeoff corresponds to the compression factor of the given input waveform. As seen from very early on, the compression factor quickly causes a large error spike of around 11 volts just at a low compression of around 4 times the original waveform size (the exact compression scheme is detailed in the compression terminology section at the beginning of this paper). What is important to realize here is that the error begins to converge to a constant value after a compression factor of around 13 times. The initial spike and convergence behavior of the tradeoff are the two important factors to notice here.
+\\
+First, if a minimum error is to be achieved, a compression factor of 1 (original size) or 2 (half the original size) should be employed. If an error of around 9 volts is acceptable, due to the convergence behavior with larger compressions, very small waveforms can be achieved with minimal differences in error. This makes it easy to achieve a suitable temporal length at the cost of around 9 volts of error. 
+\\
+In the context of a $\pm$40 volt bound, this 9-volt difference is very large, and smaller error rates are preferred. For this reason, a compression factor of 1 or 2 is best suited for the example case.
+
+\section{Use Cases}
+\subsection{Neighboring Segment Transport}
+For neighboring segments, the general scheme of the voltage ramp waveform is sinusoidal, as seen in the example used throughout the previous sections. Here, the algorithm's results on different use cases and an analysis of each interpretation given different parameters are the subjects of focus.
+\subsubsection{Example Case 1: Good for Low Error or Large Compressions}
+In the first case, the given input parameters are provided in the table below:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Input Waveform Array & [-1, -0.9990133642, ..., 0] + 1 \\ 
+  \hline
+  Input Time Array & [0, 0.02, ..., 1] \\ 
+  \hline
+  Filter Kernel Coefficients & [4.65175217e-05, ..., 1.00004649e+00] \\ 
+  \hline
+  Minimum DAQ Step & 380 ns \\ 
+  \hline
+  Total Duration & 19.38 $\mu$s \\ 
+  \hline
+  Waveform Size & 6 volts \\ 
+  \hline
+  Minimum Voltage Size & -40 volts \\ 
+  \hline
+  Maximum Voltage Size & +40 volts \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+These weights correspond to the following optimized parameters used:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Error Weight & 1.00 \\ 
+  \hline
+  Padding Weight & 0.05 \\ 
+  \hline
+  Compression Weight & 1.00 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+The optimization parameters are given as:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Padding Range & 5 $\rightarrow$ 61 \\ 
+  \hline
+  Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
+  \hline
+  Regularization Exponent & -6 $\rightarrow$ 0 \\ 
+  \hline
+  Compression Range & 1 $\rightarrow$ 2 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+These parameters will not be explained here, as they were detailed in the previous sections leading up to this point.
+\\
+The following output is as given:
+
+\begin{figure}[hbt!]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v1/output1v1.png}
+  \subcaption{}
+  \label{output1v1}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v1/errorplot1v1.png}
+  \subcaption{}
+  \label{errorplot1v1}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v1/heatmap1v1.png}
+  \subcaption{}
+  \label{heatmap1v1}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v1/tradeoffplot1v1.png}
+  \caption{}
+  \label{tradeoffplot1v1}
+\end{subfigure}
+\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
+\label{fig:1v1}
+\end{figure}
+
+The corresponding printed results are:
+
+\begin{minted}{python}
+#The best padding is: 31
+#The best regularization is: 5e-05
+#The best compression is: 1
+#The best penalty is: 0.7289897979212718
+#Root Mean Squared Error (RMSE): 0.075 V
+#Max Absolute Error: 0.179 V
+\end{minted}
+
+This neighboring transport ramp has a compression factor of one, meaning it is not at all compressed. No compression allows the waveform to maximize accuracy, which is shown by the low error rate of $\approx 0.729$, which is even below 1 volt--this is a large difference compared with the peak error at 10 volts as shown in image (d).
+\\
+For the given weights, the selected iteration (in gold in image (c)) is weighted equally between error and compression, explaining why it is located on a low error square that is not necessarily at a high or low padding value. This cell borders the voltage bounds of +40 volts, as shown in the peak near 40 volts in image (a). Here, the precompensation is not yet failing, but instead, the limitation on error versus padding comes from the voltage bound. 
+\\
+This example case section showcases the same input as the previous case, but with different weights. The goal is to show the effect of different weights on the optimizer.
+\\
+Here, the given weights are:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Error Weight & 0.50 \\ 
+  \hline
+  Padding Weight & 0.09 \\ 
+  \hline
+  Compression Weight & 0.01 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+Then, the results are as follows:
+
+\begin{figure}[hbt!]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v2/output1v2.png}
+  \subcaption{}
+  \label{output1v2}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v2/errorplot1v2.png}
+  \subcaption{}
+  \label{errorplot1v2}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v2/heatmap1v2.png}
+  \subcaption{}
+  \label{heatmap1v2}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_0_1v2/tradeoffplot1v2.png}
+  \caption{}
+  \label{tradeoffplot1v2}
+\end{subfigure}
+\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
+\label{fig:1v2}
+\end{figure}
+
+The corresponding printed results are:
+
+\begin{minted}{python}
+#The best padding is: 26
+#The best regularization is: 4e-05
+#The best compression is: 1
+#The best penalty is: 2.249
+#Root Mean Squared Error (RMSE): 0.451 V
+#Max Absolute Error: 0.649 V
+\end{minted}
+
+In this case, the chosen optimal iteration has a smaller padding value of 22 instead of 31 as in case one. Corresponsively, the output (red) waveform in image (a) is also smaller than the first case, at almost 35 $\mu$s instead of around 43 $\mu$s. In consequence however, the rmse and max absolute error has almost doubled. The rmse from case one to case two is: $0.075$v $\; \rightarrow \; 0.942$v. This is a significant increase. Likewise, for the max absolute error: $0.179$v $\; \rightarrow \; 1.264$v.
+\\
+Comparing example cases one and two provides a clear demonstration of the tradeoff between waveform length and accuracy. Waveform one is much more accurate, but some almost 10 $\mu$s longer, while waveform two is shorter but not as accurate.
+\\
+A very important realization for this case is in image (d). If the waveform wants to be scaled down and a $\approx 6.1$ volt difference is acceptable, large compression values can be achieved due to the conversion behavior.
+
+\subsubsection{Example Case 2: Shorter Waveforms with Padding and Weights Reparameterization}
+
+In this second example, the same results with different optimization parameters are shown. The goal in this example is to show how different compression and padding values attempt to shorten the waveform, changing the shape of the heatmap in conjunction with the optimizer.
+\\
+Here, the input values are the same as the first example. The key is to show different optimization parameter cases of the same input to see how the algorithm behaves.
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Input Waveform Array & [-1, -0.9990133642, ..., 0] + 1 \\ 
+  \hline
+  Input Time Array & [0, 0.02, ..., 1] \\ 
+  \hline
+  Filter Kernel Coefficients & [4.65175217e-05, ..., 1.00004649e+00] \\ 
+  \hline
+  Minimum DAQ Step & 380 ns \\ 
+  \hline
+  Total Duration & 19.38 $\mu$s \\ 
+  \hline
+  Waveform Size & 6 volts \\ 
+  \hline
+  Minimum Voltage Size & -40 volts \\ 
+  \hline
+  Maximum Voltage Size & +40 volts \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+The weights for heatmaps 1 and 2 are:
+
+\begin{center}
+\begin{tabular}{cc}
+\begin{minipage}{.5\linewidth}
+    \begin{tabular}{ | c | c | } 
+      \hline
+       Error Weight & 1.00 \\ 
+      \hline
+      Padding Weight & 0.05 \\ 
+      \hline
+      Compression Weight & 2.00 \\ 
+      \hline
+    \end{tabular}
+\end{minipage} &
+\begin{minipage}{.5\linewidth}
+    \begin{tabular}{ | c | c | } 
+          \hline
+           Error Weight & 1.00 \\ 
+          \hline
+          Padding Weight & 0.05 \\ 
+          \hline
+          Compression Weight & 5.00 \\ 
+          \hline
+    \end{tabular}
+\end{minipage}
+\end{tabular}
+\end{center}
+
+These optimization parameters for heatmaps 1 and 2 are:
+
+\begin{center}
+\begin{tabular}{cc}
+\begin{minipage}{.5\linewidth}
+    \begin{tabular}{ | c | c | } 
+      \hline
+       Padding Range & 10 $\rightarrow$ 61 \\ 
+      \hline
+      Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
+      \hline
+      Regularization Exponent & -6 $\rightarrow$ 0 \\ 
+      \hline
+      Compression Range & 1 $\rightarrow$ 3 \\ 
+      \hline
+    \end{tabular}
+\end{minipage} &
+\begin{minipage}{.5\linewidth}
+    \begin{tabular}{ | c | c | } 
+      \hline
+       Padding Range & 30 $\rightarrow$ 81 \\ 
+      \hline
+      Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
+      \hline
+      Regularization Exponent & -6 $\rightarrow$ 0 \\ 
+      \hline
+      Compression Range & 1 $\rightarrow$ 3 \\ 
+      \hline
+    \end{tabular}
+\end{minipage}
+\end{tabular}
+\end{center}
+
+The corresponding results are shown in the figure below:
+
+\begin{figure}[hbt!]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_1_2v2/output2v2.png}
+  \subcaption{}
+  \label{output2v2}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_1_2v2/errorplot2v2.png}
+  \subcaption{}
+  \label{errorplot2v2}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_1_2v2/heatmap2v2.png}
+  \subcaption{}
+  \label{heatmap2v2}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_1_2v2/heatmap2v1.png}
+  \caption{}
+  \label{heatmap2v2}
+\end{subfigure}
+\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The first heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) A second heatmap snapshot of the same case.}
+\label{fig:1v2}
+\end{figure}
+
+The corresponding printed results are:
+ 
+\begin{minted}{python}
+#The best padding is: 47
+#The best regularization is: 3e-04
+#The best compression is: 2
+#The best penalty is: -0.615
+#Root Mean Squared Error (RMSE): 0.487 V
+#Max Absolute Error: 1.035 V
+\end{minted}
+
+In this case, the compression value is 2 instead of 1. Intrinsically, this increases the error. To combat this, larger padding value and regularization strength is employed by the optimizer to keep the waveform in control. In image (a), the effect of larger regularization strength corresponds with the more oscillatory precompensation signal as opposed to the first example with a regularization strength of 5e-5. It is also worth noting that the max absolute error is also much larger than the first case of 0.179 volts (this also applies to the rmse, which is larger). As mentioned in the tradeoff method section, the price to pay for a larger compression value is also a larger error.
+
+\subsubsection{Example Case 3: The Nature of Large Compressions}
+
+This example continues on the tradeoff section, utilizing the convergence of large compression values to a constant error value. The point here is to show that, at the cost of in this case $\approx$ 7 volts, high compressions can be achieved with minimal difference in error compared to a much lower compression. In fact, as seen in the tradeoff graph from the respective section, some higher compressions actually even yield lower error rates than the inital spike at around a compression factor of 12. In the given image (d), the compression range is larger to further amplify the nature of this convergence behavior.
+\\
+In this case, the setup is as follows (the input data is the same):
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Padding Range & 30 $\rightarrow$ 101 \\ 
+  \hline
+  Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
+  \hline
+  Regularization Exponent & -6 $\rightarrow$ 0 \\ 
+  \hline
+  Compression Range & 1 $\rightarrow$ 5 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+The respective weight values are:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Error Weight & 1.00 \\ 
+  \hline
+  Padding Weight & 0.05 \\ 
+  \hline
+  Compression Weight & 5.00 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+Here, the output is:
+
+\begin{figure}[hbt!]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_2_1v1/output1v1.png}
+  \subcaption{}
+  \label{output1v1}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_2_1v1/errorplot1v1.png}
+  \subcaption{}
+  \label{errorplot1v1}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_2_1v1/heatmap1v1.png}
+  \subcaption{}
+  \label{heatmap1v1}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_2_1v1/tradeoff1v1.png}
+  \caption{}
+  \label{tradeoff1v1}
+\end{subfigure}
+\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
+\label{fig:3v1}
+\end{figure}
+
+The corresponding printed results are:
+
+\begin{minted}{python}
+#The best padding is: 53
+#The best regularization is: 4e-04
+#The best compression is: 4
+#The best penalty is: -15.317
+#Root Mean Squared Error (RMSE): 0.757 V
+#Max Absolute Error: 2.033 V
+\end{minted}
+
+With a much larger padding range, higher compression values can be achieved without a much higher max absolute error. Compared to a previous example with a compression of 2 and error of 1.035 volts, here higher compressions can be achieved without a sudden error "spike". Although the max absolute error is twice the magnitude than that of a factor 2 compression case, the waveform is also half the size. For cases in which waveforms want to be kept some factor shorter without a reasonably large compression (such as 9 volts or more for the spike case) the padding is of a higher magnitude. A larger padding may at first sound like a bad idea, but with larger compression values, the division scales this large padding down significantly, as seen in image (a).
+
+\subsection{Multiple Segment Transport}
+In the previous examples, transport voltage ramps are used across neighboring segments. This sinusoidal shape corresponds to the voltage change in the electrode segments is an extreme case of precompensation. For multiple-segment transport, a more bell-shaped curve is employed, which has more precompensation potential. For this reason, larger compressions and lower errors are demonstrated.
+
+Here, the input data is different:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Input Waveform 1 Array & [-1, -0.9990133642, ..., 0] + 1 \\ 
+  \hline
+  Input Waveform 2 Array & [0, -0.0009866358, ..., 0] + 1 \\ 
+  \hline
+  Input Time Array & [0, 0.02, ..., 1] \\ 
+  \hline
+  Filter Kernel Coefficients & [4.65175217e-05, ..., 1.00004649e+00] \\ 
+  \hline
+  Minimum DAQ Step & 380 ns \\ 
+  \hline
+  Total Duration & 19.38 $\mu$s \\ 
+  \hline
+  Waveform Size & 6 volts \\ 
+  \hline
+  Minimum Voltage Size & -40 volts \\ 
+  \hline
+  Maximum Voltage Size & +40 volts \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+The following optimization parameters are used:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Padding Range & 5 $\rightarrow$ 61 \\ 
+  \hline
+  Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
+  \hline
+  Regularization Exponent & -6 $\rightarrow$ 0 \\ 
+  \hline
+  Compression Range & 1 $\rightarrow$ 2 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+These weights correspond to the following optimized parameters used:
+
+\begin{center}
+\begin{tabular}{ | c | c | } 
+  \hline
+   Error Weight & 1.00 \\ 
+  \hline
+  Padding Weight & 0.05 \\ 
+  \hline
+  Compression Weight & 1.00 \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+Keeping in mind that multiple-segment transport has a different shape than neighboring segments, the resulting output is shown below:
+
+\begin{figure}[hbt!]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_4_4v1/output4v1.png}
+  \subcaption{}
+  \label{output4v1}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_4_4v1/errorplot4v1.png}
+  \subcaption{}
+  \label{errorplot4v1}
+\end{subfigure}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_4_4v1/heatmap4v1.png}
+  \subcaption{}
+  \label{heatmap4v1}
+\end{subfigure}
+\quad
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Results/Result_4_4v1/tradeoffplot4v1.png}
+  \caption{}
+  \label{tradeoffplot4v1}
+\end{subfigure}
+\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
+\label{fig:3v1}
+\end{figure}
+
+The corresponding printed results are:
+
+\begin{minted}{python}
+#The best padding is: 33
+#The best regularization is: 3e-06
+#The best compression is: 1
+#The best penalty is: 2.493
+#Root Mean Squared Error (RMSE): 0.107 V
+#Max Absolute Error: 0.193 V
+\end{minted}
+
+A big difference between this non-neighboring segment case is tradeoff graph, which has a much higher initial spike that only begins to taper off at a compression of 10. The 9 volt convergence value is still the same as with neighboring segments. Notable, the heatmap is quite different, favoring larger padding values and smaller regularization strengths much more heavily. At no compressions, the function has quite a nice low error rate of 0.193 volts (max absolute). The padding is also quite small, at 33.
+
+\section{Conclusion}
+\subsection{Closing Thoughts}
+In all cases of transport waveform ramps, a maximum absolute error of well below 1 volt is best achieved by no compression, and a moderate padding of around 30 to 50. The regularization strength for these values is usually also in the 5e-4 to 2e-2 range, which lies in the middle of the heatmap. A compression factor of 2 yields around 1 volt of error, which can be appropriate depending on the waveform optimization priorities (if the speedup is more important than the 1 volt error). 
+\\
+For much larger compressions, a larger error must be accounted for, but this incremental error rate begins to converge as compressions increase, which can be a useful fact if the voltage error (in this case, 9 volts) is small relative to the use case.
+\\
+To see some compression while still holding on to as much accuracy as possible, larger padding values morph the tradeoff graph to tolerate a larger range of small compression values (with minimal error).
+
+\subsection{Hardware Limitations}
+The DAQ used in our experiment can only update every 380ns (or 0.38 $\mu$s), leaving a bound on resolution. For high compressions and high error rates, this is a major problem. For a waveform of 19.38 $\mu$s, which is the uncompressed duration of the above two plots, there are only
+
+\begin{equation}
+    \dfrac{19.38 \mu s}{380 ns} = \dfrac{19.38 \mu s}{0.38 \mu s} \approx 51
+\end{equation}
+
+51 samples in total.
+\\
+To further visualize this restraint on resolution, a graph of plots is shown to highlight the spacing limitation:
+
+\begin{figure}[hbt!]
+\centering
+\begin{subfigure}{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/hardware1.png}
+  \subcaption{}
+  \label{hardware1}
+\end{subfigure}
+\quad
+\begin{subfigure}{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/hardware2.png}
+  \caption{}
+  \label{hardware2}
+\end{subfigure}
+\caption{A scatter plot showing the 0.38 $\mu$s step between points.}
+\label{fig:3v1}
+\end{figure}
+
+Because of this limit of 380 ns or higher resolution (more samples), the waveform would need to be longer in order to have a higher accuracy, which is the opposite of what compression does, and what is desired. This also explains why multiple-segment transport ramps, which are longer than neighboring ramps, have better accuracy. To increase the resolution and decrease the waveform size while still retaining accuracy, a DAQ below a sampling rate corresponding to 380 ns would need to be used. 
+\\
+Another limitation of the waveform precompensation is the voltage bound of $\pm 40 $ volts. In some heatmaps from the previous section, the "grayed" area represents out-of-bounds cells, as mentioned before. Some of these values hold low error-low padding values, which could be better case scenarios than the optimal case. For these to be accessible, the hardware used would need to have values above and below 40 volts.
+\\
+However, within the selected parameters, the precompensation and optimization provided the optimal 'best' case scenario waveform.
+
+\section{Code Reference}
+For reference to my direct algorithm code used to build this system, you can \href{https://github.com/OnekaSingh/Qiskit-Tutorial-Projects/blob/main/transport_ramps.ipynb}{click here}, or visit the following link:
+\begin{minted}{text}
+https://github.com/OnekaSingh/Qiskit-Tutorial-Projects/blob/main/transport_ramps.ipynb
+\end{minted}
+
+\newpage
+
+\begin{thebibliography}{4}
+
+\bibitem{orth2021}
+Maximilian Heinrich Orth (2021), \emph{Advanced Ion Shuttling Operations for Scalable Quantum Computing}, Master's thesis, Department of Physics, Mathematics and Computer Science (FB 08), Johannes Gutenberg University Mainz, November 2, 2021.
+
+\bibitem{bowler2012}
+R. Bowler, J. Gaebler, Y. Lin, T. R. Tan, D. Hanneke, J. D. Jost, J. P. Home, and D. Leibfried (2012),
+\emph{Coherent Diabatic Ion Transport and Separation in a Multizone Trap Array},
+Phys. Rev. Lett. \textbf{109}, 080501.
+
+\bibitem{blakestad2020}
+R. B. Blakestad (2020),
+\emph{Shuttling-based trapped-ion quantum information processing},
+AVS Quantum Sci. \textbf{2}, 014101.
+
+\bibitem{weidt2012}
+Sebastian Weidt (2012),
+\emph{Quantum Information Processing with Trapped Ions in Microstructured Paul Traps},
+Ph.D. thesis, Johannes Gutenberg-Universität Mainz.
+
+\end{thebibliography}
+
+\end{document}

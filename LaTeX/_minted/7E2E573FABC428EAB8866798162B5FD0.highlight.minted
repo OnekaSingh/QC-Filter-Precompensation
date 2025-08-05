@@ -1,0 +1,9 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{trimming}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{precompensated}\PYG{p}{,} \PYG{n}{best\PYGZus{}padding}\PYG{p}{,} \PYG{n}{first\PYGZus{}index}\PYG{p}{,} \PYG{n}{last\PYGZus{}index}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{best\PYGZus{}padding}\PYG{o}{*}\PYG{l+m+mf}{0.3}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{precompensated}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{first\PYGZus{}index}
+        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{best\PYGZus{}padding}\PYG{o}{*}\PYG{l+m+mf}{0.5}\PYG{p}{)}\PYG{p}{,}
+            \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{precompensated}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{n}{last\PYGZus{}index}
+        \PYG{k}{return} \PYG{n}{precompensated}
+\end{MintedVerbatim}

@@ -1,0 +1,10 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{numpy}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{np}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{matplotlib}\PYG{n+nn}{.}\PYG{n+nn}{pyplot}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{plt}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{scipy}\PYG{n+nn}{.}\PYG{n+nn}{fftpack}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{fft}\PYG{p}{,} \PYG{n}{ifft}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{scipy}\PYG{n+nn}{.}\PYG{n+nn}{interpolate}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{interp1d}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{seaborn}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{sns}
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{sklearn}\PYG{n+nn}{.}\PYG{n+nn}{metrics}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{mean\PYGZus{}squared\PYGZus{}error}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{matplotlib}\PYG{n+nn}{.}\PYG{n+nn}{patches}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{patches}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{matplotlib}\PYG{n+nn}{.}\PYG{n+nn}{colors}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{mcolors}
+\end{MintedVerbatim}

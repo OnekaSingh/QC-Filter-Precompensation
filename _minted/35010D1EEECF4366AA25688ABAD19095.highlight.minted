@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{error\PYGZus{}grid}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{n}{reg\PYGZus{}index}\PYG{p}{]} \PYG{o}{=} \PYG{n}{error}
+    \PYG{n}{bounds\PYGZus{}grid}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{n}{reg\PYGZus{}index}\PYG{p}{]} \PYG{o}{=} \PYG{n}{bounds}
+    \PYG{n}{reg\PYGZus{}index} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}
+\end{MintedVerbatim}

@@ -1,0 +1,10 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+\PYG{n}{waveform} \PYG{o}{*}\PYG{o}{=} \PYG{n}{waveform\PYGZus{}size}
+
+\PYG{n}{best\PYGZus{}error\PYGZus{}grid}\PYG{p}{,} \PYG{n}{bounds\PYGZus{}grid}\PYG{p}{,} \PYG{n}{best\PYGZus{}compression}\PYG{p}{,} \PYG{n}{best\PYGZus{}padding}\PYG{p}{,} \PYG{n}{best\PYGZus{}reg\PYGZus{}strength} \PYG{o}{=}
+\PYG{n}{Optimize}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{optimizer}\PYG{p}{(}\PYG{n}{waveform}\PYG{p}{,} \PYG{n}{time\PYGZus{}array}\PYG{p}{,} \PYG{n}{num\PYGZus{}samples}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} the method of focus}
+
+\PYG{n}{Optimize}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{heatmap}\PYG{p}{(}\PYG{n}{best\PYGZus{}error\PYGZus{}grid}\PYG{p}{,} \PYG{n}{bounds\PYGZus{}grid}\PYG{p}{,} \PYG{n}{best\PYGZus{}padding}\PYG{p}{,} \PYG{n}{best\PYGZus{}reg\PYGZus{}strength}\PYG{p}{,}
+\PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+\end{MintedVerbatim}

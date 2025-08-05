@@ -1,0 +1,14 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} generate all possibilities:}
+    \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{compress} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{compression\PYGZus{}range}\PYG{p}{)}\PYG{p}{:}
+
+        \PYG{n}{error\PYGZus{}grid} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{full}\PYG{p}{(}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{)}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}exponents}\PYG{p}{)} \PYG{o}{*}
+            \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}coeff}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{nan}\PYG{p}{)}
+        \PYG{n}{bounds\PYGZus{}grid} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{full}\PYG{p}{(}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{)}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}exponents}\PYG{p}{)} \PYG{o}{*}
+            \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}coeff}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{nan}\PYG{p}{)}
+
+        \PYG{k}{for} \PYG{n}{i}\PYG{p}{,} \PYG{n}{padding} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{reg\PYGZus{}index} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{k}{for} \PYG{n}{j}\PYG{p}{,} \PYG{n}{reg} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}exponents}\PYG{p}{)}\PYG{p}{:}
+                \PYG{k}{for} \PYG{n}{l}\PYG{p}{,} \PYG{n}{coeff} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}coeff}\PYG{p}{)}\PYG{p}{:}
+\end{MintedVerbatim}

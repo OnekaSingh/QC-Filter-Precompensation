@@ -1,0 +1,33 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Overview}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Introduction and Goal}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Algorithm Steps}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Terminology}{3}{subsection.1.3}%
+\contentsline {section}{\numberline {2}The Algorithm}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Filter Simulation Class}{4}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Importing Libraries}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Filter Method}{5}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}The Setup}{5}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Convolution "Filter Simulation"}{8}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Interpolation Method}{9}{subsubsection.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.6}The Filter Precompensation}{9}{subsubsection.2.1.6}%
+\contentsline {subsubsection}{\numberline {2.1.7}Tikhonov Regularization}{11}{subsubsection.2.1.7}%
+\contentsline {subsubsection}{\numberline {2.1.8}Trimming Method}{12}{subsubsection.2.1.8}%
+\contentsline {subsubsection}{\numberline {2.1.9}Filtering the Precompensated Waveform}{12}{subsubsection.2.1.9}%
+\contentsline {subsubsection}{\numberline {2.1.10}Plotter Method}{13}{subsubsection.2.1.10}%
+\contentsline {subsection}{\numberline {2.2}Optimize Class}{15}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Parameters and Optimization Logic}{16}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Optimizer Method}{17}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Heatmap Method}{21}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Error Plotter Method}{22}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Tradeoff Plot Method}{25}{subsubsection.2.2.5}%
+\contentsline {section}{\numberline {3}Use Cases}{27}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Neighboring Segment Transport}{27}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Example Case 1: Good for Low Error or Large Compressions}{28}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Example Case 2: Shorter Waveforms with Padding and Weights Reparameterization}{31}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Example Case 3: The Nature of Large Compressions}{32}{subsubsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.2}Multiple Segment Transport}{34}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Conclusion}{36}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Closing Thoughts}{36}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Hardware Limitations}{36}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Code Reference}{36}{section.5}%

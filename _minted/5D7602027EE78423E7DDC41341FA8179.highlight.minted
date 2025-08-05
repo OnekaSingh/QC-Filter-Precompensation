@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{precompensated} \PYG{o}{=} \PYG{n}{precompensated}\PYG{p}{[}\PYG{p}{:}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{original}\PYG{p}{)}\PYG{p}{]}
+    \PYG{n}{precompensated} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{trimming}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{,} \PYG{n}{best\PYGZus{}padding}\PYG{p}{,}
+        \PYG{n}{first\PYGZus{}index}\PYG{p}{,} \PYG{n}{last\PYGZus{}index}\PYG{p}{)}
+\end{MintedVerbatim}

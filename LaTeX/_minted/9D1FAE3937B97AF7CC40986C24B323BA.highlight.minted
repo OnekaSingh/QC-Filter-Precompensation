@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{convolution}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{waveform}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{impulse\PYGZus{}response} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{filter}\PYG{p}{(}\PYG{p}{)}
+        \PYG{n}{filtered\PYGZus{}waveform} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{convolve}\PYG{p}{(}\PYG{n}{waveform}\PYG{p}{,} \PYG{n}{impulse\PYGZus{}response}\PYG{p}{,} \PYG{n}{mode} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{full}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{filtered\PYGZus{}waveform}
+\end{MintedVerbatim}

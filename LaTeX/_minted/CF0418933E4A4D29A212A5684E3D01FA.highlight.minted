@@ -1,0 +1,3 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{penalty} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{alpha} \PYG{o}{*} \PYG{n}{error} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{beta} \PYG{o}{*} \PYG{n}{padding} \PYG{o}{\PYGZhy{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gamma} \PYG{o}{*} \PYG{n}{compress}
+\end{MintedVerbatim}

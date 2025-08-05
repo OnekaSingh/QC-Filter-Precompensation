@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{reg\PYGZus{}array}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}coeff}\PYG{p}{)} \PYG{o}{*} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}exponents}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{reg\PYGZus{}array}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{reg\PYGZus{}strength}\PYG{p}{)}
+\end{MintedVerbatim}

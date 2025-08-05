@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{impulse\PYGZus{}response} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{diff}\PYG{p}{(}\PYG{n}{step\PYGZus{}response}\PYG{p}{,} \PYG{n}{prepend} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{impulse\PYGZus{}response}
+\end{MintedVerbatim}

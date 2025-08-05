@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{if} \PYG{n}{bounds} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{penalty} \PYG{o}{\PYGZlt{}} \PYG{n}{best\PYGZus{}penalty}\PYG{p}{:}
+            \PYG{n}{best\PYGZus{}penalty} \PYG{o}{=} \PYG{n}{penalty}
+            \PYG{n}{best\PYGZus{}params} \PYG{o}{=} \PYG{p}{(}\PYG{n}{compress}\PYG{p}{,} \PYG{n}{padding}\PYG{p}{,} \PYG{n}{reg\PYGZus{}strength}\PYG{p}{,} \PYG{n}{penalty}\PYG{p}{,} \PYG{n}{bounds}\PYG{p}{)}
+            \PYG{n}{all\PYGZus{}best\PYGZus{}params}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{best\PYGZus{}params}\PYG{p}{)}
+\end{MintedVerbatim}

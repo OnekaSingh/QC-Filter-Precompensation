@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{total\PYGZus{}length} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{impulse\PYGZus{}response}\PYG{p}{)} \PYG{o}{+} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{waveform}\PYG{p}{)}
+    \PYG{n}{ir\PYGZus{}padded} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pad}\PYG{p}{(}\PYG{n}{impulse\PYGZus{}response}\PYG{p}{,} \PYG{p}{(}\PYG{n}{best\PYGZus{}padding}\PYG{p}{,} \PYG{n}{total\PYGZus{}length} \PYG{o}{\PYGZhy{}}
+        \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{impulse\PYGZus{}response}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{best\PYGZus{}pading}\PYG{p}{)}\PYG{p}{,} \PYG{n}{mode}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{constant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{waveform\PYGZus{}padded} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pad}\PYG{p}{(}\PYG{n}{waveform}\PYG{p}{,} \PYG{p}{(}\PYG{n}{best\PYGZus{}padding}\PYG{p}{,} \PYG{n}{total\PYGZus{}length} \PYG{o}{\PYGZhy{}}
+        \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{waveform}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{best\PYGZus{}pading}\PYG{p}{)}\PYG{p}{,} \PYG{n}{mode}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{constant}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{constant\PYGZus{}values}\PYG{o}{=}\PYG{n}{last\PYGZus{}index}\PYG{p}{)}
+\end{MintedVerbatim}

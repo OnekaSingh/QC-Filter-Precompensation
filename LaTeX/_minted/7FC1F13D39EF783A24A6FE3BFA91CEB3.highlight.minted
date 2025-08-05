@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    print(f\PYGZsq{}The best padding is:\PYGZsq{}, best\PYGZus{}padding)
+    print(f\PYGZsq{}The best regularization is: \PYGZob{}best\PYGZus{}reg\PYGZus{}strength:.0e\PYGZcb{}\PYGZsq{})
+    print(f\PYGZsq{}The best compression is: \PYGZob{}best\PYGZus{}compression\PYGZcb{}\PYGZsq{})
+    print(f\PYGZsq{}The best penalty is: \PYGZob{}best\PYGZus{}penalty\PYGZcb{}\PYGZsq{})
+    print(f\PYGZdq{}Root Mean Squared Error (RMSE): \PYGZob{}rmse:.3f\PYGZcb{} V\PYGZdq{})
+    print(f\PYGZdq{}Max Absolute Error: \PYGZob{}np.max(pointwise\PYGZus{}error):.3f\PYGZcb{} V\PYGZdq{})
+\end{MintedVerbatim}

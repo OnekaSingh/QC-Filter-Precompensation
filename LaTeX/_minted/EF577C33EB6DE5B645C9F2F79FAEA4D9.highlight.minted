@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{original}\PYG{p}{,} \PYG{n}{time}\PYG{p}{,} \PYG{n}{dt}\PYG{p}{,} \PYG{n}{first\PYGZus{}index}\PYG{p}{,} \PYG{n}{last\PYGZus{}index} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{setup}\PYG{p}{(}\PYG{n}{time\PYGZus{}array}
+\PYG{o}{/} \PYG{n}{best\PYGZus{}compression}\PYG{p}{,} \PYG{n}{waveform}\PYG{p}{,} \PYG{n}{best\PYGZus{}compression}\PYG{p}{,} \PYG{n}{num\PYGZus{}samples}\PYG{p}{,} \PYG{n}{best\PYGZus{}padding}\PYG{p}{)}
+\end{MintedVerbatim}

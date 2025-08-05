@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n}{shift\PYGZus{}p\PYGZus{}unfiltered} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{)}\PYG{p}{)} \PYG{o}{*} \PYG{n}{dt}
+\PYG{n}{precompensated\PYGZus{}unfiltered} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{interpolation}\PYG{p}{(}\PYG{n}{time}\PYG{p}{,}
+\PYG{n}{shift\PYGZus{}p\PYGZus{}unfiltered}\PYG{p}{,} \PYG{n}{precompensated}\PYG{p}{)}
+
+\end{MintedVerbatim}

@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} input values:}
+\PYG{n}{waveform\PYGZus{}size} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{6} \PYG{c+c1}{\PYGZsh{} volts}
+\PYG{n}{time\PYGZus{}step} \PYG{o}{=} \PYG{l+m+mf}{0.38} \PYG{c+c1}{\PYGZsh{} DAQ lower limit}
+\end{MintedVerbatim}

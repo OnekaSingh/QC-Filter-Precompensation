@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{cmap} \PYG{o}{=} \PYG{n}{sns}\PYG{o}{.}\PYG{n}{color\PYGZus{}palette}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{coolwarm}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{as\PYGZus{}cmap}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+    \PYG{n}{ax} \PYG{o}{=} \PYG{n}{sns}\PYG{o}{.}\PYG{n}{heatmap}\PYG{p}{(}
+        \PYG{n}{error\PYGZus{}grid}\PYG{p}{,}
+        \PYG{n}{yticklabels} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{[}\PYG{p}{:}\PYG{p}{:}\PYG{l+m+mi}{10}\PYG{p}{]}\PYG{p}{,}  \PYG{c+c1}{\PYGZsh{} compression values}
+        \PYG{n}{cmap} \PYG{o}{=} \PYG{n}{cmap}\PYG{p}{,}
+        \PYG{n}{cbar\PYGZus{}kws} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{label}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Error (in V)}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+        \PYG{n}{annot} \PYG{o}{=} \PYG{k+kc}{False}\PYG{p}{,} \PYG{c+c1}{\PYGZsh{} set to true for values displayed on each cell}
+        \PYG{n}{fmt} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{.2e}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{c+c1}{\PYGZsh{} scientific notation format for annotations}
+    \PYG{p}{)}
+\end{MintedVerbatim}

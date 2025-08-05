@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{for} \PYG{n}{k}\PYG{p}{,} \PYG{n}{compress} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{compression\PYGZus{}range}\PYG{p}{)}\PYG{p}{:}
+            \PYG{k}{for} \PYG{n}{i}\PYG{p}{,} \PYG{n}{padding} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{padding\PYGZus{}range}\PYG{p}{)}\PYG{p}{:}
+                \PYG{k}{for} \PYG{n}{j}\PYG{p}{,} \PYG{n}{reg} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reg\PYGZus{}exponents}\PYG{p}{)}\PYG{p}{:}
+\end{MintedVerbatim}

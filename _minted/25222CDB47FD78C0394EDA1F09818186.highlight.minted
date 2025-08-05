@@ -1,0 +1,10 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{optimizer}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{waveform}\PYG{p}{,} \PYG{n}{time\PYGZus{}array}\PYG{p}{,} \PYG{n}{num\PYGZus{}samples}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{best\PYGZus{}penalty} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{inf}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{best\PYGZus{}params} \PYG{o}{=} \PYG{p}{(}\PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} compression, padding,}
+    \PYG{n}{reg\PYGZus{}strength}\PYG{p}{,} \PYG{n}{penalty}\PYG{p}{,} \PYG{n}{bounds}
+    \PYG{n}{all\PYGZus{}best\PYGZus{}params} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{reg\PYGZus{}array} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+
+    \PYG{n}{compression\PYGZus{}grids} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

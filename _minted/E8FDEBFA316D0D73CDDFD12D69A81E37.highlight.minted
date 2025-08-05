@@ -1,0 +1,20 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{dense\PYGZus{}time} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{time\PYGZus{}array}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{,} \PYG{n}{num\PYGZus{}samples}\PYG{p}{)}
+    \PYG{n}{dense\PYGZus{}waveform} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{interp}\PYG{p}{(}\PYG{n}{dense\PYGZus{}time}\PYG{p}{,} \PYG{n}{time\PYGZus{}array} \PYG{o}{/} \PYG{n}{compress}\PYG{p}{,} \PYG{n}{waveform}\PYG{p}{)}
+    \PYG{n}{original} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pad}\PYG{p}{(}\PYG{n}{dense\PYGZus{}waveform}\PYG{p}{,} \PYG{n}{pad\PYGZus{}width}\PYG{o}{=}\PYG{n}{padding}\PYG{p}{,} \PYG{n}{mode}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{edge}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{time\PYGZus{}sliced} \PYG{o}{=} \PYG{n}{dense\PYGZus{}time}\PYG{p}{[}\PYG{p}{:}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{original}\PYG{p}{)}\PYG{p}{]}
+    \PYG{n}{dt} \PYG{o}{=} \PYG{n}{time\PYGZus{}sliced}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{time\PYGZus{}sliced}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{n}{time} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{original}\PYG{p}{)}\PYG{p}{)} \PYG{o}{*} \PYG{n}{dt}
+    \PYG{n}{first\PYGZus{}index} \PYG{o}{=} \PYG{n}{original}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{n}{last\PYGZus{}index} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{original}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{)}
+
+    \PYG{n}{precompensated} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{precompensation}\PYG{p}{(}\PYG{n}{original}\PYG{p}{,} \PYG{n}{last\PYGZus{}index}\PYG{p}{,}
+        \PYG{n}{reg\PYGZus{}strength}\PYG{p}{,} \PYG{n}{padding}\PYG{p}{)}
+    \PYG{n}{precompensated} \PYG{o}{=} \PYG{n}{precompensated}\PYG{p}{[}\PYG{p}{:}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{original}\PYG{p}{)}\PYG{p}{]}
+    \PYG{n}{precompensated} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{trimming}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{,} \PYG{n}{padding}\PYG{p}{,}
+        \PYG{n}{first\PYGZus{}index}\PYG{p}{,} \PYG{n}{last\PYGZus{}index}\PYG{p}{)}
+    \PYG{n}{precompensated\PYGZus{}filtered} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{convolution}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{)}
+    \PYG{n}{shift\PYGZus{}p} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{precompensated\PYGZus{}filtered}\PYG{p}{)}\PYG{p}{)} \PYG{o}{*} \PYG{n}{dt}
+    \PYG{n}{precompensated\PYGZus{}filtered} \PYG{o}{=} \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{interpolation}\PYG{p}{(}\PYG{n}{time}\PYG{p}{,} \PYG{n}{shift\PYGZus{}p}\PYG{p}{,}
+        \PYG{n}{precompensated\PYGZus{}filtered}\PYG{p}{)}
+\end{MintedVerbatim}

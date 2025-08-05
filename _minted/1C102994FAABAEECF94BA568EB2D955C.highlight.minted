@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}The best padding is: 53}
+\PYG{c+c1}{\PYGZsh{}The best regularization is: 4e\PYGZhy{}04}
+\PYG{c+c1}{\PYGZsh{}The best compression is: 4}
+\PYG{c+c1}{\PYGZsh{}The best penalty is: \PYGZhy{}15.317}
+\PYG{c+c1}{\PYGZsh{}Root Mean Squared Error (RMSE): 0.757 V}
+\PYG{c+c1}{\PYGZsh{}Max Absolute Error: 2.033 V}
+\end{MintedVerbatim}

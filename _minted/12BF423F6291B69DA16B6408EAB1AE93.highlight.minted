@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} gray overlay where bounds = 1:}
+    \PYG{n}{overlay} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{bounds\PYGZus{}grid} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{nan}\PYG{p}{)}
+    \PYG{n}{sns}\PYG{o}{.}\PYG{n}{heatmap}\PYG{p}{(}
+        \PYG{n}{overlay}\PYG{p}{,}
+        \PYG{n}{mask} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{isnan}\PYG{p}{(}\PYG{n}{overlay}\PYG{p}{)}\PYG{p}{,}
+        \PYG{n+nb}{map} \PYG{o}{=} \PYG{n}{mcolors}\PYG{o}{.}\PYG{n}{ListedColormap}\PYG{p}{(}\PYG{p}{[}\PYG{p}{(}\PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mf}{0.8}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}\PYG{p}{,}
+        \PYG{n}{cbar} \PYG{o}{=} \PYG{k+kc}{False}\PYG{p}{,}
+        \PYG{n}{ax} \PYG{o}{=} \PYG{n}{ax}
+    \PYG{p}{)}
+\end{MintedVerbatim}

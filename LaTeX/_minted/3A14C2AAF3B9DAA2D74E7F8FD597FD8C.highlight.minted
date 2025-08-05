@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{compression\PYGZus{}array}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{compress}\PYG{p}{)}
+    \PYG{n}{error\PYGZus{}array}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{error}\PYG{p}{)}
+\end{MintedVerbatim}

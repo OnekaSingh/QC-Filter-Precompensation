@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+        \PYG{n}{f\PYGZus{}w} \PYG{o}{=} \PYG{n}{h\PYGZus{}w} \PYG{o}{*} \PYG{n}{regularized\PYGZus{}G}
+        \PYG{n}{f\PYGZus{}t} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{real}\PYG{p}{(}\PYG{n}{ifft}\PYG{p}{(}\PYG{n}{f\PYGZus{}w}\PYG{p}{)}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{f\PYGZus{}t}
+\end{MintedVerbatim}

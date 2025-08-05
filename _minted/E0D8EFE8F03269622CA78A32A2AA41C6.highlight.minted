@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{if} \PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{upper\PYGZus{}voltage\PYGZus{}bound} \PYG{o+ow}{or} \PYG{n}{np}\PYG{o}{.}\PYG{n}{min}\PYG{p}{(}\PYG{n}{precompensated}\PYG{p}{)}
+        \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{lower\PYGZus{}voltage\PYGZus{}bound}\PYG{p}{:}
+        \PYG{n}{bounds} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{n}{bounds} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{MintedVerbatim}

@@ -1,0 +1,3 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{dense\PYGZus{}waveform} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{interp}\PYG{p}{(}\PYG{n}{dense\PYGZus{}time}\PYG{p}{,} \PYG{n}{time\PYGZus{}array} \PYG{o}{/} \PYG{n}{compression}\PYG{p}{,} \PYG{n}{waveform}\PYG{p}{)}
+\end{MintedVerbatim}

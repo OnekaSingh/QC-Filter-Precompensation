@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{FilterSimulation}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{plotter}\PYG{p}{(}\PYG{n}{original}\PYG{p}{,} \PYG{n}{time}\PYG{p}{,} \PYG{n}{filtered}\PYG{p}{,} \PYG{n}{precompensated\PYGZus{}unfiltered}\PYG{p}{,}
+        \PYG{n}{precompensated\PYGZus{}filtered}\PYG{p}{)}
+\end{MintedVerbatim}
