@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  31 AUG 2025 09:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  31 AUG 2025 10:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -944,10 +944,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \pydata@fh@_8C7DD922AD47494FC02C388E12C00EAC.data.minted=\write7
 \openout7 = `_8C7DD922AD47494FC02C388E12C00EAC.data.minted'.
 
-runsystem(latexminted config  --timestamp 20250831091440 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20250831101458 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
 
  (./_8C7DD922AD47494FC02C388E12C00EAC.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20250831091440 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+runsystem(latexminted cleanconfig  --timestamp 20250831101458 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
 
  (./_minted/default.style.minted) (./_minted/9D2E32A4AFB7FF513FBF340121044120.highlight.minted
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1.
@@ -1041,11 +1041,11 @@ Overfull \hbox (2.14124pt too wide) in paragraph at lines 738--739
 [20] (./_minted/71216C88C7EF0DFBA122097B14D9D640.highlight.minted) (./_minted/191A8B574B671A323F64B503F1A799F8.highlight.minted) (./_minted/12BF423F6291B69DA16B6408EAB1AE93.highlight.minted) (./_minted/3666E20E5A4369A20C98781AD9F05271.highlight.minted
 
 [21])
-<Results/Result_0_1v1/heatmap1v1.png, id=167, 455.301pt x 339.669pt>
+<Results/Result_0_1v1/heatmap1v1.png, id=167, 416.2752pt x 328.8285pt>
 File: Results/Result_0_1v1/heatmap1v1.png Graphic file (type png)
 <use Results/Result_0_1v1/heatmap1v1.png>
 Package pdftex.def Info: Results/Result_0_1v1/heatmap1v1.png  used on input line 1005.
-(pdftex.def)             Requested size: 426.79135pt x 318.4078pt.
+(pdftex.def)             Requested size: 426.79135pt x 337.15175pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1081,19 +1081,19 @@ Package pdftex.def Info: Results/Result_0_1v1/errorplot1v1.png  used on input li
 [24 <./Results/Result_0_1v1/errorplot1v1.png>] (./_minted/20D1DE1D10D08F867B7D957294F13F12.highlight.minted) (./_minted/BBEC019515A67E3CECBDDDD0948F6EF8.highlight.minted) (./_minted/0F84686BD25BD18813374DC8011D5627.highlight.minted) (./_minted/3A14C2AAF3B9DAA2D74E7F8FD597FD8C.highlight.minted) (./_minted/F5B68F8FBBE50D6C2F672AEACA5EAED2.highlight.minted
 
 [25])
-<Results/Result_0_1v1/tradeoffplot1v1.png, id=192, 414.8298pt x 328.8285pt>
+<Results/Result_0_1v1/tradeoffplot1v1.png, id=192, 416.2752pt x 328.8285pt>
 File: Results/Result_0_1v1/tradeoffplot1v1.png Graphic file (type png)
 <use Results/Result_0_1v1/tradeoffplot1v1.png>
 Package pdftex.def Info: Results/Result_0_1v1/tradeoffplot1v1.png  used on input line 1159.
-(pdftex.def)             Requested size: 426.79135pt x 338.32083pt.
+(pdftex.def)             Requested size: 426.79135pt x 337.15175pt.
 
 
 [26 <./Results/Result_0_1v1/tradeoffplot1v1.png>]
-<Results/Result_0_1v1/output1v1.png, id=199, 786.2976pt x 498.663pt>
+<Results/Result_0_1v1/output1v1.png, id=199, 792.8019pt x 498.663pt>
 File: Results/Result_0_1v1/output1v1.png Graphic file (type png)
 <use Results/Result_0_1v1/output1v1.png>
 Package pdftex.def Info: Results/Result_0_1v1/output1v1.png  used on input line 1235.
-(pdftex.def)             Requested size: 192.0548pt x 121.79686pt.
+(pdftex.def)             Requested size: 192.0548pt x 120.80008pt.
 File: Results/Result_0_1v1/errorplot1v1.png Graphic file (type png)
 <use Results/Result_0_1v1/errorplot1v1.png>
 Package pdftex.def Info: Results/Result_0_1v1/errorplot1v1.png  used on input line 1242.
@@ -1101,165 +1101,88 @@ Package pdftex.def Info: Results/Result_0_1v1/errorplot1v1.png  used on input li
 File: Results/Result_0_1v1/heatmap1v1.png Graphic file (type png)
 <use Results/Result_0_1v1/heatmap1v1.png>
 Package pdftex.def Info: Results/Result_0_1v1/heatmap1v1.png  used on input line 1248.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
+(pdftex.def)             Requested size: 192.0548pt x 151.7095pt.
 File: Results/Result_0_1v1/tradeoffplot1v1.png Graphic file (type png)
 <use Results/Result_0_1v1/tradeoffplot1v1.png>
 Package pdftex.def Info: Results/Result_0_1v1/tradeoffplot1v1.png  used on input line 1255.
-(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
- (./_minted/629138EA3616FEE2B02A6F3CA9885714.highlight.minted)
+(pdftex.def)             Requested size: 192.0548pt x 151.7095pt.
+ (./_minted/E92D62EFAFA89ED51BE81BEEEB9947F7.highlight.minted)
 
 [27]
-<Results/Result_0_1v2/output1v2.png, id=207, 414.8298pt x 328.8285pt>
-File: Results/Result_0_1v2/output1v2.png Graphic file (type png)
-<use Results/Result_0_1v2/output1v2.png>
-Package pdftex.def Info: Results/Result_0_1v2/output1v2.png  used on input line 1300.
-(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
-<Results/Result_0_1v2/errorplot1v2.png, id=208, 455.301pt x 339.669pt>
-File: Results/Result_0_1v2/errorplot1v2.png Graphic file (type png)
-<use Results/Result_0_1v2/errorplot1v2.png>
-Package pdftex.def Info: Results/Result_0_1v2/errorplot1v2.png  used on input line 1307.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
-<Results/Result_0_1v2/heatmap1v2.png, id=209, 786.2976pt x 498.663pt>
-File: Results/Result_0_1v2/heatmap1v2.png Graphic file (type png)
-<use Results/Result_0_1v2/heatmap1v2.png>
-Package pdftex.def Info: Results/Result_0_1v2/heatmap1v2.png  used on input line 1313.
-(pdftex.def)             Requested size: 192.0548pt x 121.79686pt.
-<Results/Result_0_1v2/tradeoffplot1v2.png, id=210, 455.301pt x 339.669pt>
-File: Results/Result_0_1v2/tradeoffplot1v2.png Graphic file (type png)
-<use Results/Result_0_1v2/tradeoffplot1v2.png>
-Package pdftex.def Info: Results/Result_0_1v2/tradeoffplot1v2.png  used on input line 1320.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
- (./_minted/07CEEDC4E37C0630B640A69186C97F5F.highlight.minted
 
-[28 <./Results/Result_0_1v1/output1v1.png>])
-
-[29 <./Results/Result_0_1v2/output1v2.png> <./Results/Result_0_1v2/errorplot1v2.png> <./Results/Result_0_1v2/heatmap1v2.png> <./Results/Result_0_1v2/tradeoffplot1v2.png>]
-Overfull \hbox (24.00003pt too wide) in paragraph at lines 1376--1400
- [] 
- []
-
-
-Overfull \hbox (24.00003pt too wide) in paragraph at lines 1405--1433
- [] 
- []
-
-<Results/Result_1_2v2/output2v2.png, id=227, 414.8298pt x 328.8285pt>
-File: Results/Result_1_2v2/output2v2.png Graphic file (type png)
-<use Results/Result_1_2v2/output2v2.png>
-Package pdftex.def Info: Results/Result_1_2v2/output2v2.png  used on input line 1441.
-(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
-<Results/Result_1_2v2/errorplot2v2.png, id=228, 455.301pt x 339.669pt>
-File: Results/Result_1_2v2/errorplot2v2.png Graphic file (type png)
-<use Results/Result_1_2v2/errorplot2v2.png>
-Package pdftex.def Info: Results/Result_1_2v2/errorplot2v2.png  used on input line 1448.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
-<Results/Result_1_2v2/heatmap2v2.png, id=229, 786.2976pt x 498.663pt>
-File: Results/Result_1_2v2/heatmap2v2.png Graphic file (type png)
-<use Results/Result_1_2v2/heatmap2v2.png>
-Package pdftex.def Info: Results/Result_1_2v2/heatmap2v2.png  used on input line 1454.
-(pdftex.def)             Requested size: 192.0548pt x 121.79686pt.
-<Results/Result_1_2v2/heatmap2v1.png, id=230, 786.2976pt x 498.663pt>
-File: Results/Result_1_2v2/heatmap2v1.png Graphic file (type png)
-<use Results/Result_1_2v2/heatmap2v1.png>
-Package pdftex.def Info: Results/Result_1_2v2/heatmap2v1.png  used on input line 1461.
-(pdftex.def)             Requested size: 192.0548pt x 121.79686pt.
-(./_minted/22E631F3B94A73C73AAD1BB4793F8171.highlight.minted)
-
-[30]
-<Results/Result_2_1v1/output1v1.png, id=236, 414.8298pt x 328.8285pt>
-File: Results/Result_2_1v1/output1v1.png Graphic file (type png)
-<use Results/Result_2_1v1/output1v1.png>
-Package pdftex.def Info: Results/Result_2_1v1/output1v1.png  used on input line 1522.
-(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
-<Results/Result_2_1v1/errorplot1v1.png, id=237, 455.301pt x 339.669pt>
-File: Results/Result_2_1v1/errorplot1v1.png Graphic file (type png)
-<use Results/Result_2_1v1/errorplot1v1.png>
-Package pdftex.def Info: Results/Result_2_1v1/errorplot1v1.png  used on input line 1529.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
-<Results/Result_2_1v1/heatmap1v1.png, id=238, 803.6424pt x 498.663pt>
-File: Results/Result_2_1v1/heatmap1v1.png Graphic file (type png)
-<use Results/Result_2_1v1/heatmap1v1.png>
-Package pdftex.def Info: Results/Result_2_1v1/heatmap1v1.png  used on input line 1535.
-(pdftex.def)             Requested size: 192.0548pt x 119.17175pt.
-<Results/Result_2_1v1/tradeoff1v1.png, id=239, 455.301pt x 339.669pt>
-File: Results/Result_2_1v1/tradeoff1v1.png Graphic file (type png)
-<use Results/Result_2_1v1/tradeoff1v1.png>
-Package pdftex.def Info: Results/Result_2_1v1/tradeoff1v1.png  used on input line 1542.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
-
-
-[31 <./Results/Result_1_2v2/output2v2.png> <./Results/Result_1_2v2/errorplot2v2.png> <./Results/Result_1_2v2/heatmap2v2.png> <./Results/Result_1_2v2/heatmap2v1.png>] (./_minted/1C102994FAABAEECF94BA568EB2D955C.highlight.minted)
-
-[32 <./Results/Result_2_1v1/output1v1.png> <./Results/Result_2_1v1/errorplot1v1.png> <./Results/Result_2_1v1/heatmap1v1.png> <./Results/Result_2_1v1/tradeoff1v1.png>]
-<Results/Result_4_4v1/output4v1.png, id=260, 414.8298pt x 328.8285pt>
+[28 <./Results/Result_0_1v1/output1v1.png>]
+<Results/Result_4_4v1/output4v1.png, id=215, 414.8298pt x 328.8285pt>
 File: Results/Result_4_4v1/output4v1.png Graphic file (type png)
 <use Results/Result_4_4v1/output4v1.png>
-Package pdftex.def Info: Results/Result_4_4v1/output4v1.png  used on input line 1628.
+Package pdftex.def Info: Results/Result_4_4v1/output4v1.png  used on input line 1344.
 (pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
-<Results/Result_4_4v1/errorplot4v1.png, id=261, 455.301pt x 339.669pt>
+<Results/Result_4_4v1/errorplot4v1.png, id=216, 414.8298pt x 328.8285pt>
 File: Results/Result_4_4v1/errorplot4v1.png Graphic file (type png)
 <use Results/Result_4_4v1/errorplot4v1.png>
-Package pdftex.def Info: Results/Result_4_4v1/errorplot4v1.png  used on input line 1635.
-(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
-<Results/Result_4_4v1/heatmap4v1.png, id=262, 786.2976pt x 498.663pt>
+Package pdftex.def Info: Results/Result_4_4v1/errorplot4v1.png  used on input line 1351.
+(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
+<Results/Result_4_4v1/heatmap4v1.png, id=217, 786.2976pt x 498.663pt>
 File: Results/Result_4_4v1/heatmap4v1.png Graphic file (type png)
 <use Results/Result_4_4v1/heatmap4v1.png>
-Package pdftex.def Info: Results/Result_4_4v1/heatmap4v1.png  used on input line 1641.
+Package pdftex.def Info: Results/Result_4_4v1/heatmap4v1.png  used on input line 1357.
 (pdftex.def)             Requested size: 192.0548pt x 121.79686pt.
-<Results/Result_4_4v1/tradeoffplot4v1.png, id=263, 455.301pt x 339.669pt>
+<Results/Result_4_4v1/tradeoffplot4v1.png, id=218, 455.301pt x 339.669pt>
 File: Results/Result_4_4v1/tradeoffplot4v1.png Graphic file (type png)
 <use Results/Result_4_4v1/tradeoffplot4v1.png>
-Package pdftex.def Info: Results/Result_4_4v1/tradeoffplot4v1.png  used on input line 1648.
+Package pdftex.def Info: Results/Result_4_4v1/tradeoffplot4v1.png  used on input line 1364.
 (pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
- (./_minted/F6CFC1DE6A4F550C844417DFBCADC425.highlight.minted)
+ (./_minted/761A87650EAC5591805202A648305C65.highlight.minted)
+Underfull \hbox (badness 10000) in paragraph at lines 1389--1391
 
-[33]
+ []
 
-[34 <./Results/Result_4_4v1/output4v1.png> <./Results/Result_4_4v1/errorplot4v1.png> <./Results/Result_4_4v1/heatmap4v1.png> <./Results/Result_4_4v1/tradeoffplot4v1.png>]
+
+
+[29]
 pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1680 \begin{equation}
+l.1395 \begin{equation}
                        
 pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1680 \begin{equation}
+l.1395 \begin{equation}
                        
 pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1680 \begin{equation}
+l.1395 \begin{equation}
                        
 pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1680 \begin{equation}
+l.1395 \begin{equation}
                        
-<Figures/hardware1.png, id=280, 414.8298pt x 328.8285pt>
+<Figures/hardware1.png, id=225, 414.8298pt x 328.8285pt>
 File: Figures/hardware1.png Graphic file (type png)
 <use Figures/hardware1.png>
-Package pdftex.def Info: Figures/hardware1.png  used on input line 1692.
+Package pdftex.def Info: Figures/hardware1.png  used on input line 1407.
 (pdftex.def)             Requested size: 213.39568pt x 169.15038pt.
-<Figures/hardware2.png, id=281, 414.8298pt x 328.8285pt>
+<Figures/hardware2.png, id=226, 414.8298pt x 328.8285pt>
 File: Figures/hardware2.png Graphic file (type png)
 <use Figures/hardware2.png>
-Package pdftex.def Info: Figures/hardware2.png  used on input line 1699.
+Package pdftex.def Info: Figures/hardware2.png  used on input line 1414.
 (pdftex.def)             Requested size: 213.39568pt x 169.15038pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 1703.
+(Font)              <9> on input line 1418.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1703.
+(Font)              <5> on input line 1418.
 
 
-[35 <./Figures/hardware1.png> <./Figures/hardware2.png>] (./_minted/82173400A50B6063F23D4F1DACDACE57.highlight.minted)
+[30 <./Results/Result_4_4v1/output4v1.png> <./Results/Result_4_4v1/errorplot4v1.png> <./Results/Result_4_4v1/heatmap4v1.png> <./Results/Result_4_4v1/tradeoffplot4v1.png>] (./_minted/82173400A50B6063F23D4F1DACDACE57.highlight.minted)
 
-[36]
+[31 <./Figures/hardware1.png> <./Figures/hardware2.png>]
 
-[37]
+[32]
 \openout7 = `_8C7DD922AD47494FC02C388E12C00EAC.data.minted'.
 
-runsystem(latexminted clean  --timestamp 20250831091440 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+runsystem(latexminted clean  --timestamp 20250831101458 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
 
  (./file.aux)
  ***********
@@ -1277,21 +1200,21 @@ Package rerunfilecheck Warning: File `file.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `file.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  EB486915D076530AA6FF52E5B5A91B46;6604.
+(rerunfilecheck)             After:  D04E1EACF4789A64111600993B77123E;5695.
  ) 
 Here is how much of TeX's memory you used:
- 33667 strings out of 473190
- 681163 string characters out of 5715801
- 1271446 words of memory out of 5000000
- 55975 multiletter control sequences out of 15000+600000
+ 33537 strings out of 473190
+ 676278 string characters out of 5715801
+ 1267446 words of memory out of 5000000
+ 55863 multiletter control sequences out of 15000+600000
  619011 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 95i,15n,93p,1064b,975s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 95i,8n,93p,1062b,975s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on file.pdf (37 pages, 1190648 bytes).
+Output written on file.pdf (32 pages, 765853 bytes).
 PDF statistics:
- 422 PDF objects out of 1000 (max. 8388607)
- 293 compressed objects within 3 object streams
- 114 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 368 PDF objects out of 1000 (max. 8388607)
+ 268 compressed objects within 3 object streams
+ 104 named destinations out of 1000 (max. 500000)
+ 78 words of extra memory for PDF output out of 10000 (max. 10000000)
 

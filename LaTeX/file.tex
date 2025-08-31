@@ -1169,7 +1169,7 @@ In the context of a $\pm$40 volt bound, this 9-volt difference is very large, an
 \section{Use Cases}
 \subsection{Neighboring Segment Transport}
 For neighboring segments, the general scheme of the voltage ramp waveform is sinusoidal, as seen in the example used throughout the previous sections. Here, the algorithm's results on different use cases and an analysis of each interpretation given different parameters are the subjects of focus.
-\subsubsection{Example Case 1: Good for Low Error or Large Compressions}
+\subsubsection{Transport over Neighboring Segments}
 In the first case, the given input parameters are provided in the table below:
 
 \begin{center}
@@ -1219,7 +1219,7 @@ The optimization parameters are given as:
   \hline
   Regularization Exponent & -6 $\rightarrow$ 0 \\ 
   \hline
-  Compression Range & 1 $\rightarrow$ 2 \\ 
+  Compression Range & 1 $\rightarrow$ 10 \\ 
   \hline
 \end{tabular}
 \end{center}
@@ -1263,307 +1263,23 @@ The following output is as given:
 The corresponding printed results are:
 
 \begin{minted}{python}
-#The best padding is: 31
+#The best padding is: 8
 #The best regularization is: 5e-05
-#The best compression is: 1
+#The best compression is: 5
 #The best penalty is: 0.7289897979212718
 #Root Mean Squared Error (RMSE): 0.075 V
 #Max Absolute Error: 0.179 V
 \end{minted}
 
-This neighboring transport ramp has a compression factor of one, meaning it is not at all compressed. No compression allows the waveform to maximize accuracy, which is shown by the low error rate of $\approx 0.729$, which is even below 1 volt--this is a large difference compared with the peak error at 10 volts as shown in image (d).
+This neighboring transport ramp has a compression factor of 5.
 \\
 For the given weights, the selected iteration (in gold in image (c)) is weighted equally between error and compression, explaining why it is located on a low error square that is not necessarily at a high or low padding value. This cell borders the voltage bounds of +40 volts, as shown in the peak near 40 volts in image (a). Here, the precompensation is not yet failing, but instead, the limitation on error versus padding comes from the voltage bound. 
 \\
 This example case section showcases the same input as the previous case, but with different weights. The goal is to show the effect of different weights on the optimizer.
-\\
-Here, the given weights are:
 
-\begin{center}
-\begin{tabular}{ | c | c | } 
-  \hline
-   Error Weight & 0.50 \\ 
-  \hline
-  Padding Weight & 0.09 \\ 
-  \hline
-  Compression Weight & 0.01 \\ 
-  \hline
-\end{tabular}
-\end{center}
+\subsubsection{Transport over Non-Neighboring Segments}
 
-Then, the results are as follows:
-
-\begin{figure}[hbt!]
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_0_1v2/output1v2.png}
-  \subcaption{}
-  \label{output1v2}
-\end{subfigure}
-\quad
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_0_1v2/errorplot1v2.png}
-  \subcaption{}
-  \label{errorplot1v2}
-\end{subfigure}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_0_1v2/heatmap1v2.png}
-  \subcaption{}
-  \label{heatmap1v2}
-\end{subfigure}
-\quad
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_0_1v2/tradeoffplot1v2.png}
-  \caption{}
-  \label{tradeoffplot1v2}
-\end{subfigure}
-\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
-\label{fig:1v2}
-\end{figure}
-
-The corresponding printed results are:
-
-\begin{minted}{python}
-#The best padding is: 26
-#The best regularization is: 4e-05
-#The best compression is: 1
-#The best penalty is: 2.249
-#Root Mean Squared Error (RMSE): 0.451 V
-#Max Absolute Error: 0.649 V
-\end{minted}
-
-In this case, the chosen optimal iteration has a smaller padding value of 22 instead of 31 as in case one. Corresponsively, the output (red) waveform in image (a) is also smaller than the first case, at almost 35 $\mu$s instead of around 43 $\mu$s. In consequence however, the rmse and max absolute error has almost doubled. The rmse from case one to case two is: $0.075$v $\; \rightarrow \; 0.942$v. This is a significant increase. Likewise, for the max absolute error: $0.179$v $\; \rightarrow \; 1.264$v.
-\\
-Comparing example cases one and two provides a clear demonstration of the tradeoff between waveform length and accuracy. Waveform one is much more accurate, but some almost 10 $\mu$s longer, while waveform two is shorter but not as accurate.
-\\
-A very important realization for this case is in image (d). If the waveform wants to be scaled down and a $\approx 6.1$ volt difference is acceptable, large compression values can be achieved due to the conversion behavior.
-
-\subsubsection{Example Case 2: Shorter Waveforms with Padding and Weights Reparameterization}
-
-In this second example, the same results with different optimization parameters are shown. The goal in this example is to show how different compression and padding values attempt to shorten the waveform, changing the shape of the heatmap in conjunction with the optimizer.
-\\
-Here, the input values are the same as the first example. The key is to show different optimization parameter cases of the same input to see how the algorithm behaves.
-
-\begin{center}
-\begin{tabular}{ | c | c | } 
-  \hline
-   Input Waveform Array & [-1, -0.9990133642, ..., 0] + 1 \\ 
-  \hline
-  Input Time Array & [0, 0.02, ..., 1] \\ 
-  \hline
-  Filter Kernel Coefficients & [4.65175217e-05, ..., 1.00004649e+00] \\ 
-  \hline
-  Minimum DAQ Step & 380 ns \\ 
-  \hline
-  Total Duration & 19.38 $\mu$s \\ 
-  \hline
-  Waveform Size & 6 volts \\ 
-  \hline
-  Minimum Voltage Size & -40 volts \\ 
-  \hline
-  Maximum Voltage Size & +40 volts \\ 
-  \hline
-\end{tabular}
-\end{center}
-
-The weights for heatmaps 1 and 2 are:
-
-\begin{center}
-\begin{tabular}{cc}
-\begin{minipage}{.5\linewidth}
-    \begin{tabular}{ | c | c | } 
-      \hline
-       Error Weight & 1.00 \\ 
-      \hline
-      Padding Weight & 0.05 \\ 
-      \hline
-      Compression Weight & 2.00 \\ 
-      \hline
-    \end{tabular}
-\end{minipage} &
-\begin{minipage}{.5\linewidth}
-    \begin{tabular}{ | c | c | } 
-          \hline
-           Error Weight & 1.00 \\ 
-          \hline
-          Padding Weight & 0.05 \\ 
-          \hline
-          Compression Weight & 5.00 \\ 
-          \hline
-    \end{tabular}
-\end{minipage}
-\end{tabular}
-\end{center}
-
-These optimization parameters for heatmaps 1 and 2 are:
-
-\begin{center}
-\begin{tabular}{cc}
-\begin{minipage}{.5\linewidth}
-    \begin{tabular}{ | c | c | } 
-      \hline
-       Padding Range & 10 $\rightarrow$ 61 \\ 
-      \hline
-      Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
-      \hline
-      Regularization Exponent & -6 $\rightarrow$ 0 \\ 
-      \hline
-      Compression Range & 1 $\rightarrow$ 3 \\ 
-      \hline
-    \end{tabular}
-\end{minipage} &
-\begin{minipage}{.5\linewidth}
-    \begin{tabular}{ | c | c | } 
-      \hline
-       Padding Range & 30 $\rightarrow$ 81 \\ 
-      \hline
-      Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
-      \hline
-      Regularization Exponent & -6 $\rightarrow$ 0 \\ 
-      \hline
-      Compression Range & 1 $\rightarrow$ 3 \\ 
-      \hline
-    \end{tabular}
-\end{minipage}
-\end{tabular}
-\end{center}
-
-The corresponding results are shown in the figure below:
-
-\begin{figure}[hbt!]
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_1_2v2/output2v2.png}
-  \subcaption{}
-  \label{output2v2}
-\end{subfigure}
-\quad
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_1_2v2/errorplot2v2.png}
-  \subcaption{}
-  \label{errorplot2v2}
-\end{subfigure}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_1_2v2/heatmap2v2.png}
-  \subcaption{}
-  \label{heatmap2v2}
-\end{subfigure}
-\quad
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_1_2v2/heatmap2v1.png}
-  \caption{}
-  \label{heatmap2v2}
-\end{subfigure}
-\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The first heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) A second heatmap snapshot of the same case.}
-\label{fig:1v2}
-\end{figure}
-
-The corresponding printed results are:
- 
-\begin{minted}{python}
-#The best padding is: 47
-#The best regularization is: 3e-04
-#The best compression is: 2
-#The best penalty is: -0.615
-#Root Mean Squared Error (RMSE): 0.487 V
-#Max Absolute Error: 1.035 V
-\end{minted}
-
-In this case, the compression value is 2 instead of 1. Intrinsically, this increases the error. To combat this, larger padding value and regularization strength is employed by the optimizer to keep the waveform in control. In image (a), the effect of larger regularization strength corresponds with the more oscillatory precompensation signal as opposed to the first example with a regularization strength of 5e-5. It is also worth noting that the max absolute error is also much larger than the first case of 0.179 volts (this also applies to the rmse, which is larger). As mentioned in the tradeoff method section, the price to pay for a larger compression value is also a larger error.
-
-\subsubsection{Example Case 3: The Nature of Large Compressions}
-
-This example continues on the tradeoff section, utilizing the convergence of large compression values to a constant error value. The point here is to show that, at the cost of in this case $\approx$ 7 volts, high compressions can be achieved with minimal difference in error compared to a much lower compression. In fact, as seen in the tradeoff graph from the respective section, some higher compressions actually even yield lower error rates than the inital spike at around a compression factor of 12. In the given image (d), the compression range is larger to further amplify the nature of this convergence behavior.
-\\
-In this case, the setup is as follows (the input data is the same):
-
-\begin{center}
-\begin{tabular}{ | c | c | } 
-  \hline
-   Padding Range & 30 $\rightarrow$ 101 \\ 
-  \hline
-  Regularization Coefficient & 1 $\rightarrow$ 8 \\ 
-  \hline
-  Regularization Exponent & -6 $\rightarrow$ 0 \\ 
-  \hline
-  Compression Range & 1 $\rightarrow$ 5 \\ 
-  \hline
-\end{tabular}
-\end{center}
-
-The respective weight values are:
-
-\begin{center}
-\begin{tabular}{ | c | c | } 
-  \hline
-   Error Weight & 1.00 \\ 
-  \hline
-  Padding Weight & 0.05 \\ 
-  \hline
-  Compression Weight & 5.00 \\ 
-  \hline
-\end{tabular}
-\end{center}
-
-Here, the output is:
-
-\begin{figure}[hbt!]
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_2_1v1/output1v1.png}
-  \subcaption{}
-  \label{output1v1}
-\end{subfigure}
-\quad
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_2_1v1/errorplot1v1.png}
-  \subcaption{}
-  \label{errorplot1v1}
-\end{subfigure}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_2_1v1/heatmap1v1.png}
-  \subcaption{}
-  \label{heatmap1v1}
-\end{subfigure}
-\quad
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \includegraphics[width=\linewidth]{Results/Result_2_1v1/tradeoff1v1.png}
-  \caption{}
-  \label{tradeoff1v1}
-\end{subfigure}
-\caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
-\label{fig:3v1}
-\end{figure}
-
-The corresponding printed results are:
-
-\begin{minted}{python}
-#The best padding is: 53
-#The best regularization is: 4e-04
-#The best compression is: 4
-#The best penalty is: -15.317
-#Root Mean Squared Error (RMSE): 0.757 V
-#Max Absolute Error: 2.033 V
-\end{minted}
-
-With a much larger padding range, higher compression values can be achieved without a much higher max absolute error. Compared to a previous example with a compression of 2 and error of 1.035 volts, here higher compressions can be achieved without a sudden error "spike". Although the max absolute error is twice the magnitude than that of a factor 2 compression case, the waveform is also half the size. For cases in which waveforms want to be kept some factor shorter without a reasonably large compression (such as 9 volts or more for the spike case) the padding is of a higher magnitude. A larger padding may at first sound like a bad idea, but with larger compression values, the division scales this large padding down significantly, as seen in image (a).
-
-\subsection{Multiple Segment Transport}
-In the previous examples, transport voltage ramps are used across neighboring segments. This sinusoidal shape corresponds to the voltage change in the electrode segments is an extreme case of precompensation. For multiple-segment transport, a more bell-shaped curve is employed, which has more precompensation potential. For this reason, larger compressions and lower errors are demonstrated.
-
-Here, the input data is different:
+In this second example, the optimal non-neighboring segment transport waveform is shown.
 
 \begin{center}
 \begin{tabular}{ | c | c | } 
@@ -1600,7 +1316,7 @@ The following optimization parameters are used:
   \hline
   Regularization Exponent & -6 $\rightarrow$ 0 \\ 
   \hline
-  Compression Range & 1 $\rightarrow$ 2 \\ 
+  Compression Range & 1 $\rightarrow$ 10 \\ 
   \hline
 \end{tabular}
 \end{center}
@@ -1656,9 +1372,9 @@ Keeping in mind that multiple-segment transport has a different shape than neigh
 The corresponding printed results are:
 
 \begin{minted}{python}
-#The best padding is: 33
+#The best padding is: 8
 #The best regularization is: 3e-06
-#The best compression is: 1
+#The best compression is: 6
 #The best penalty is: 2.493
 #Root Mean Squared Error (RMSE): 0.107 V
 #Max Absolute Error: 0.193 V
@@ -1668,13 +1384,13 @@ A big difference between this non-neighboring segment case is tradeoff graph, wh
 
 \section{Conclusion}
 \subsection{Closing Thoughts}
-In all cases of transport waveform ramps, a maximum absolute error of well below 1 volt is best achieved by no compression, and a moderate padding of around 30 to 50. The regularization strength for these values is usually also in the 5e-4 to 2e-2 range, which lies in the middle of the heatmap. A compression factor of 2 yields around 1 volt of error, which can be appropriate depending on the waveform optimization priorities (if the speedup is more important than the 1 volt error). 
+In all cases of transport waveform ramps, a maximum absolute error of well below 1 volt is best achieved where compressions are under a factor of 10, and with paddings of around 5 to 10. The regularization strength for these values is usually also in the 5e-4 to 2e-2 range, which lies in the middle of the heatmap. 
+
+For much larger compressions, a larger error must be accounted for, as seen in the trade off graphs.
 \\
-For much larger compressions, a larger error must be accounted for, but this incremental error rate begins to converge as compressions increase, which can be a useful fact if the voltage error (in this case, 9 volts) is small relative to the use case.
-\\
-To see some compression while still holding on to as much accuracy as possible, larger padding values morph the tradeoff graph to tolerate a larger range of small compression values (with minimal error).
 
 \subsection{Hardware Limitations}
+
 The DAQ used in our experiment can only update every 380ns (or 0.38 $\mu$s), leaving a bound on resolution. For high compressions and high error rates, this is a major problem. For a waveform of 19.38 $\mu$s, which is the uncompressed duration of the above two plots, there are only
 
 \begin{equation}
@@ -1684,6 +1400,8 @@ The DAQ used in our experiment can only update every 380ns (or 0.38 $\mu$s), lea
 51 samples in total.
 \\
 To further visualize this restraint on resolution, a graph of plots is shown to highlight the spacing limitation:
+
+\newpage
 
 \begin{figure}[hbt!]
 \centering
@@ -1704,13 +1422,24 @@ To further visualize this restraint on resolution, a graph of plots is shown to 
 \label{fig:3v1}
 \end{figure}
 
-Because of this limit of 380 ns or higher resolution (more samples), the waveform would need to be longer in order to have a higher accuracy, which is the opposite of what compression does, and what is desired. This also explains why multiple-segment transport ramps, which are longer than neighboring ramps, have better accuracy. To increase the resolution and decrease the waveform size while still retaining accuracy, a DAQ below a sampling rate corresponding to 380 ns would need to be used. 
+Because of this limit of 380 ns or higher resolution (more samples), the waveform would need to be longer in order to have a higher accuracy, which is the opposite of what compression does, and what is desired.
 \\
 Another limitation of the waveform precompensation is the voltage bound of $\pm 40 $ volts. In some heatmaps from the previous section, the "grayed" area represents out-of-bounds cells, as mentioned before. Some of these values hold low error-low padding values, which could be better case scenarios than the optimal case. For these to be accessible, the hardware used would need to have values above and below 40 volts.
 \\
 However, within the selected parameters, the precompensation and optimization provided the optimal 'best' case scenario waveform.
 
+\section(Ramp Excitation Simulation)
+Next, the ion transport is simulated for excitation expectation. The goal is to see no excitation (phonons) induced during the transport.
+This is first tested on the unprecompensated ramp, and later on the precompensated one.
+
+\subsection(Unprecompensated Ramp Simulation)
+
+
+
+\subsection(Precompensated Ramp Simulation)
+
 \section{Code Reference}
+
 For reference to my direct algorithm code used to build this system, you can \href{https://github.com/OnekaSingh/Qiskit-Tutorial-Projects/blob/main/transport_ramps.ipynb}{click here}, or visit the following link:
 \begin{minted}{text}
 https://github.com/OnekaSingh/Qiskit-Tutorial-Projects/blob/main/transport_ramps.ipynb
