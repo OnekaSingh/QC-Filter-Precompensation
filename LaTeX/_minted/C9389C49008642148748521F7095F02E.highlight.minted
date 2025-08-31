@@ -1,0 +1,23 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+
+\PYG{+w}{    }\PYG{n}{def}\PYG{+w}{ }\PYG{n}{excite}\PYG{p}{(}\PYG{n}{self}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{redramp}\PYG{p}{)}\PYG{o}{:}
+
+\PYG{+w}{        }\PYG{n}{transport}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{np}\PYG{p}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{p}{(}\PYG{l+m+mi}{17}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{len}\PYG{p}{(}\PYG{n}{redramp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{dtype}\PYG{o}{=}\PYG{n}{np}\PYG{p}{.}\PYG{n}{float64}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{transport}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{15}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{16}\PYG{p}{]}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{redramp}
+
+\PYG{+w}{        }\PYG{n}{redtrap}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{red\PYGZus{}system}\PYG{p}{(}\PYG{n}{trap}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{redtrap}\PYG{p}{.}\PYG{n}{setIons}\PYG{p}{(}\PYG{n}{np}\PYG{p}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mf}{\PYGZhy{}300.0e\PYGZhy{}6}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,}\PYG{p}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{dtype}\PYG{o}{=}\PYG{n}{np}\PYG{p}{.}\PYG{n}{float64}\PYG{p}{)}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{n}{t}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{redtrap}\PYG{p}{.}\PYG{n}{propagate}\PYG{p}{(}\PYG{n}{transport}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{transport}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{5e\PYGZhy{}9}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{n}{volt}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{redtrap}\PYG{p}{.}\PYG{n}{getPot}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{:}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{volt0}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{redtrap}\PYG{p}{.}\PYG{n}{getPot}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{:}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}
+
+\PYG{+w}{        }\PYG{n}{c}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{299792458}
+\PYG{+w}{        }\PYG{n}{massunit}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{931.49410242e6}\PYG{o}{/}\PYG{n}{c}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}
+\PYG{+w}{        }\PYG{n}{mCa40}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{39.962590866}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{massunit}
+
+\PYG{+w}{        }\PYG{n}{energy}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{volt}\PYG{o}{\PYGZhy{}}\PYG{n}{volt0}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{mCa40}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}
+
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{energy}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{p}
+\end{MintedVerbatim}

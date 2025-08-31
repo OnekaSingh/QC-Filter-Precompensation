@@ -1,5 +1,4 @@
 \documentclass[11pt, a4paper]{article}
-% Pode diminuir a fonte para 10pt ou aumentar para 12pt
 
 %%%%%%%%%%%%%%%%%%%%%%%---Packages---%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath}
@@ -183,7 +182,7 @@ After importing, the FilterSimulation() class is defined. The first method menti
 \\
 The input data type for the given filter kernel is an array of its coefficients. The associated filter kernel weights for the red trap's filter are given by the graph below:
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
 \includegraphics[width=1\linewidth]{Figures/kernel.png}
     \caption{Kernel weights for the FIR filter. These weights correspond to the filtering behavior on the waveforms passed through the electrodes in the red trap.}
@@ -589,7 +588,7 @@ The time is still in $\mu$s, which is on the x-axis, and the y-axis is in volts.
 
 The result of this algorithm is shown below, after running the plotter method at the end of the code. These results correspond to the aforementioned filter kernel, time array, and waveform input. The padding and regularization strength $\lambda$ are optimized later on but are set to a constant value for simplicity in explanation here. Compression is not yet applied here.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
 \includegraphics[width=1\linewidth]{Figures/example1.png}
     \caption{A simple example of applying the filter simulation algorithm on an input waveform.}
@@ -630,7 +629,7 @@ Max Absolute Error: 0.28321 V
 
 Graphically, the maximum absolute error over time is represented as follows.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
 \includegraphics[width=1\linewidth]{Figures/example1error.png}
     \caption{A simple example of applying the filter simulation algorithm on an input waveform.}
@@ -1000,15 +999,15 @@ The design code lines will not be discussed in detail, as they are standard from
 
 Thus, the heatmap display is completed. Below is the output figure corresponding to the example case's outputs. The output values given in the aforementioned table above correspond perfectly with the highlighted optimal case, ensuring that the heatmap is showing the correct result.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
 \includegraphics[width=1\linewidth]{Results/Result_0_1v1/heatmap1v1.png}
     \caption{The best compression value with the current set weights is 1. This results from having a much higher weight on low error rather than high compression. As seen in a later section, higher compressions generally lead to higher error rates, which further explains why the lowest possible compression (in this case, 1) is chosen. The padding rang,e as previously mentioned, is between 5 and 61, and the regularization strength is between 1e-6 and 7e-1. The blue areas correspond to fewer errors, and the red areas have the most errors (in terms of maximum absolute error per iteration). The grayed-out areas correspond to values outside the upper and lower voltage bounds of the function and cannot be accessed. The illuminated golden cell is the chosen "best case" of the general heatmap.}
-\end{figure} \label{heatmap1.1}
+\end{figure}
 
 As seen in the displayed heatmap, the selected optimal tile is at (5e-5, 31) with a maximum absolute error magnitude of 0.729 volts. For different weights, the selected tile would change; lighter weights on padding would present a darker blue, lower tile, while different values for compressions would show completely different heatmap snapshots. The main point here is that this result is quite tunable. Different alterations of parameters and consequently different output heatmaps are pondered in more depth in a later section.
 \\
-The heatmap is a great visualization of the developed optimization algorithm in practice, and it also showcases the options for precompensation. These options are further illustrated and explored in the other two Optimize methods: error_plotter and tradeoff\_plot.
+The heatmap is a great visualization of the developed optimization algorithm in practice, and it also showcases the options for precompensation. These options are further illustrated and explored in the other two Optimize methods: error plotter and tradeoff plot.
 
 \subsubsection{Error Plotter Method}
 
@@ -1077,11 +1076,11 @@ The result corresponding to the example yields the following values (which are w
 
 Then, the corresponding error plot is also shown below:
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
 \includegraphics[width=1\linewidth]{Results/Result_0_1v1/errorplot1v1.png}
     \caption{The following plot shows the pointwise error graphically corresponding to the example run.}
-\end{figure} \label{errorplot1v1}
+\end{figure}
 
 The error plotter shows the difference in volts between the original and precompensated filtered waveforms at every instance in time. The maximum absolute error is the absolute peak (or maximum) of this graph, and visually shows the magnitude of the maximum error relative to the rest of the function. The root mean squared error (rmse), which is also printed in the chain of results, gives further context to the error plot. The difference in rmse and maximum absolute error gives insights on how sharp the error peak is. 
 \\
@@ -1154,11 +1153,11 @@ The plotting piece of the method is defined below:
 
 Below, the plot of compression to error is given, ultimately showcasing this tradeoff between error and time:
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
 \includegraphics[width=1\linewidth]{Results/Result_0_1v1/tradeoffplot1v1.png}
     \caption{The tradeoff between error values and waveform size is shown above. The range of values for this plot is given between a compression factor of 1 to 20, as this is where the rate of change of the error begins to settle. The maximum absolute error is around 11 volts, and spikes early on at around a compression factor of 4.}
-\end{figure} \label{tradeoffplot1v1}
+\end{figure}
 
 This tradeoff corresponds to the compression factor of the given input waveform. As seen from very early on, the compression factor quickly causes a large error spike of around 11 volts just at a low compression of around 4 times the original waveform size (the exact compression scheme is detailed in the compression terminology section at the beginning of this paper). What is important to realize here is that the error begins to converge to a constant value after a compression factor of around 13 times. The initial spike and convergence behavior of the tradeoff are the two important factors to notice here.
 \\
@@ -1228,36 +1227,31 @@ These parameters will not be explained here, as they were detailed in the previo
 \\
 The following output is as given:
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_0_1v1/output1v1.png}
   \subcaption{}
-  \label{output1v1}
 \end{subfigure}
 \quad
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_0_1v1/errorplot1v1.png}
   \subcaption{}
-  \label{errorplot1v1}
 \end{subfigure}
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_0_1v1/heatmap1v1.png}
   \subcaption{}
-  \label{heatmap1v1}
 \end{subfigure}
 \quad
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_0_1v1/tradeoffplot1v1.png}
   \caption{}
-  \label{tradeoffplot1v1}
 \end{subfigure}
 \caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
-\label{fig:1v1}
 \end{figure}
 
 The corresponding printed results are:
@@ -1337,36 +1331,31 @@ These weights correspond to the following optimized parameters used:
 
 Keeping in mind that multiple-segment transport has a different shape than neighboring segments, the resulting output is shown below:
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_4_4v1/output4v1.png}
   \subcaption{}
-  \label{output4v1}
 \end{subfigure}
 \quad
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_4_4v1/errorplot4v1.png}
   \subcaption{}
-  \label{errorplot4v1}
 \end{subfigure}
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_4_4v1/heatmap4v1.png}
   \subcaption{}
-  \label{heatmap4v1}
 \end{subfigure}
 \quad
 \begin{subfigure}{.45\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Results/Result_4_4v1/tradeoffplot4v1.png}
   \caption{}
-  \label{tradeoffplot4v1}
 \end{subfigure}
 \caption{(a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}
-\label{fig:3v1}
 \end{figure}
 
 The corresponding printed results are:
@@ -1403,23 +1392,20 @@ To further visualize this restraint on resolution, a graph of plots is shown to 
 
 \newpage
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{0.5\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/hardware1.png}
   \subcaption{}
-  \label{hardware1}
 \end{subfigure}
 \quad
 \begin{subfigure}{0.5\linewidth}
   \centering
   \includegraphics[width=\linewidth]{Figures/hardware2.png}
   \caption{}
-  \label{hardware2}
 \end{subfigure}
 \caption{A scatter plot showing the 0.38 $\mu$s step between points.}
-\label{fig:3v1}
 \end{figure}
 
 Because of this limit of 380 ns or higher resolution (more samples), the waveform would need to be longer in order to have a higher accuracy, which is the opposite of what compression does, and what is desired.
@@ -1428,15 +1414,227 @@ Another limitation of the waveform precompensation is the voltage bound of $\pm 
 \\
 However, within the selected parameters, the precompensation and optimization provided the optimal 'best' case scenario waveform.
 
-\section(Ramp Excitation Simulation)
+\section{Ramp Excitation Simulation}
 Next, the ion transport is simulated for excitation expectation. The goal is to see no excitation (phonons) induced during the transport.
 This is first tested on the unprecompensated ramp, and later on the precompensated one.
 
-\subsection(Unprecompensated Ramp Simulation)
+\subsection{Unprecompensated Ramp Simulation}
 
+The goal here is to transport the ion from segment (electrode) 14 to electrode 15. First, the initial location of the ion is found, and it is at the bottom of the potential.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{Figures/ionlocation.png}
+\caption{Ion initial location at bottom of potential well at segment 14.}
+\end{figure}
 
-\subsection(Precompensated Ramp Simulation)
+Then, the aformentioned classes Optimizer and FilterSimulation are imported. There is an additional method inserted into Optimizer that optimizes (min) excitation and (max) compression.
+
+\begin{minted}[python]
+def exc_comp_plotter(self, time_array, waveform):
+    reg_array = []
+    best_best_params_abs = []
+
+    for k, compress in enumerate(self.compression_range):
+        best_penalty = float('inf')
+        best_current_params = (None, None, None)  # compress, pad, reg_strength
+        best_params_abs = []
+        all_best_params = []
+        
+        for i, pad in enumerate(self.padding_range):
+            for j, reg in enumerate(self.reg_exponents):
+                for l, coeff in enumerate(self.reg_coeff):
+                    reg_strength = coeff * 10 ** reg
+
+                    time, original = FilterSimulation().setup(time_array, waveform,
+                        compress, pad)
+
+                    precompensated = FilterSimulation().precompensation(original, 
+                        reg_strength, pad)
+                    precompensated = precompensated[:len(original)]
+                    precompensated = FilterSimulation().trimming(original, 
+                        precompensated, pad)
+                    precompensated_filtered = FilterSimulation().convolution
+                        (precompensated)
+                    shift_p = np.arange(len(precompensated_filtered)) * self.time_step
+                    precompensated_filtered = FilterSimulation().interpolation(time, 
+                        shift_p, precompensated_filtered)
+
+                    if len(reg_array) < (len(self.reg_coeff) * len(self.reg_exponents)):
+                        reg_array.append(reg_strength)
+
+                    error = np.max(np.abs(original - precompensated_filtered))
+                    length_penalty = (2 * pad + len(original)) / compress
+                    penalty = self.alpha * error + self.beta * length_penalty
+
+                    if penalty < best_penalty:
+                        best_penalty = penalty
+                        best_current_params = (compress, pad, reg_strength, penalty)
+                        all_best_params.append(best_current_params)
+
+        best_current_params = min(all_best_params, key = lambda x: x[3])
+        best_params_abs.append(best_current_params)
+        best_best_params_abs.append(best_params_abs)
+
+    return best_best_params_abs
+\end{minted}
+
+This method returns the best regularization strength and padding value for the highest compression and lowest excitation. The code is very similar to the previously detailed optimizer methods, and will not be explained in depth here.
+\\
+Additionally, another class is built for calculating the excitation of the ion as it is shuttled accross segments.
+To get the excitation of the ion, first its velocity and acceleration must be calculated. For this, a verlet integrator is used. The basic  Størmer–Verlet is a second-order differential equation that depends on ion position.
+\begin{equation}
+   M \ddot{x} (t) = f(x(t)) = - \nabla V(x(t))
+\end{equation}
+Here, $t$ is time, $x(t)$ is the ensemble of position vectors, $V$ is the scalar potential function, $F$ is the negative gradient of potential, and $M$ is the mass matrix.
+\\
+The corresponding code is:
+
+\begin{minted}[python]
+class Energize():
+
+    def excite(self, redramp):
+
+        transport = np.zeros((17, len(redramp[0])), dtype=np.float64)
+        transport[[0, 15, 16]] = redramp
+
+        redtrap = red_system(trap)  
+        redtrap.setIons(np.array([[[-300.0e-6],[0],[0]],], dtype=np.float64))
+
+        t, p = redtrap.propagate(transport, transport[0, -1], 5e-9)
+
+        volt = redtrap.getPot(p[-1, :, 0, 0], -1)
+        volt0 = redtrap.getPot(p[0, :, 0, 0], 0)
+
+        c = 299792458
+        massunit = 931.49410242e6/c**2
+        mCa40 = 39.962590866 * massunit
+
+        energy = volt-volt0 + 0.5 * mCa40 * p[-1, 0, 1, 0]**2
+
+        return energy, p
+\end{minted}
+
+First, the segment transport is defined by an array of zeros that is generated for the total 16 segments.
+The ramp is then defined over the transport over 15 to 16. The ion starts in an initial position of 0.003 meters, which is done by setIons.
+The time and position of the ion are defined by t and p respectively, and the ion is then propagated over the segment to be transported.
+The voltage of the propegation is then returned and the method gets the potential of the ion.
+Since the ion to be shuttled is a Carbon-40 isotope, its mass is used for the energy calculation in the final step.
+\\
+The energy and plot corresponding to the energy generated during transport are then given below:
+
+\begin{minted}[python]
+    energy, p = Energize().excite(redramp)
+    first_p = p[0,0,0,0]
+    last_p = p[-1, 0, 0, 0]
+
+    print(f'energy/hbar_omega:', energy / hbar_omega)
+    print(first_p, last_p)
+
+    plt.plot(p[:, 0, 1, 0])
+    plt.grid(True)
+    plt.show()
+\end{minted}
+
+The corresponding result is:
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/unprecompexc.png}
+  \subcaption{The excitation induced in the unprecomensated ion shuttling ramp. Some excitation begins during the first decent of the graph, and remains in oscillation throughout the rest of the ion propegation.}
+\end{subfigure}
+\quad
+\begin{subfigure}{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/unp.png}
+  \subcaption{Original unprecompensated waveform ramp from segment 15 to 16 to 15.}
+\end{subfigure}
+\caption{Excitation induced by the unprecompensated ramp.}
+\end{figure}
+
+The final ion's energy is:
+
+\begin{minted}[python]
+    energy/hbar_omega: [75.96217604]
+    Start position: -0.0003
+    End position: -0.00029990713363558776
+\end{minted}
+
+This ramp transport the ion from segment 15 to 16. In the graph, this corresponds to an initial peak (15 to 16), a wait time (variable) and then back down (16 to 15). Thus, the ion should end in the same position. Here, the ion's initial and final positions are near-perfectly the same.
+
+\subsection{Precompensated Ramp Simulation}
+
+Next, the precompensated ramp is simulated. This uses the same process as the original case, just with a different input ramp.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/precompexc.png}
+  \subcaption{The excitation induced in the precomensated ion shuttling ramp. Large amounts of excitation begin during the first ascent of the graph, and remains in oscillation throughout the rest of the ion propegation.}
+\end{subfigure}
+\quad
+\begin{subfigure}{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{Figures/pc.png}
+  \subcaption{Precompensated waveform ramp from segment 15 to 16 to 15.}
+\end{subfigure}
+\caption{Excitation induced by the unprecompensated ramp.}
+\end{figure}
+
+As seen here, the ramp has a much bigger excitation than the original uncompensated ramp. This may be due to the fact that the precompensated ramp has larger rates of change and deals with higher frequencies, which results in higher energies.
+
+\subsection{Ideal Precompensated Ramp and Calculating Ramp Frequency}
+
+To achieve the goal of a theoretically ideal voltage ramp that is precompensated with zero excitation, the frequency of the ion in the minimum of the potential must be held constant throughout transport. This means, the same initial and final frequencies. 
+To calculate the ion's (angular) frequency, start with the given potential energy profile $U(x)$. This is returned from the function `redtrap.getPot(x, 0)`, and is in eV.
+Then, the ion's secular angular frequency $\omega$ at the minimum located at $x_0=0\ \text{m}$ can be computed.
+
+\subsubsection{Harmonic Approximation Near the Minimum}
+
+For a stable minimum $x_0$:
+
+\begin{center}
+    $ U'(x_0)=0,\qquad U''(x_0)>0 $
+\end{center}
+
+The Taylor expansion gives:
+
+\begin{center}
+    $ U(x)\;\approx\;U(x_0)+\tfrac12\,U''(x_0)\,(x-x_0)^2 $
+\end{center}
+
+The equation of motion becomes a simple harmonic oscillator with:
+
+\begin{center}
+    $ \;\omega \;=\; \sqrt{\dfrac{U''(x_0)}{m}}\; $
+\end{center}
+
+If you had electric potential $\Phi(x)$ in volts (not energy), then $U(x)=q\,\Phi(x)$ and
+\begin{center}
+    $ > \;\omega^2 \;=\; \dfrac{q}{m}\,\Phi''(x_0)\; $
+\end{center}
+
+\subsubsection{Estimating the curvature $U''(x_0)$}
+
+For a quadratic fit (robust), fit a parabola in a small symmetric window around $x_0=0$:
+
+\begin{center}
+    $ U(x)\;\approx\; a\,x^2 + b\,x + c\quad \Longrightarrow  U''(0) = 2a\,$
+\end{center}
+
+$$
+U(x)\;\approx\; a\,x^2 + b\,x + c\quad \Longrightarrow \quad
+\boxed{\,U''(0) = 2a\,}.
+$$
+
+### 2) Centered finite differences (simple)
+On an evenly spaced grid with step \(dx\),
+$$
+\boxed{\,U''(x_i)\;\approx\;\dfrac{U_{i+1}-2U_i+U_{i-1}}{dx^2}\,}.
+$$
+
 
 \section{Code Reference}
 

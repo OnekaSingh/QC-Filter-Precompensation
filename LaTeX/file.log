@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  31 AUG 2025 10:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  31 AUG 2025 11:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -811,41 +811,31 @@ Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
 \c@definition=\count385
 \c@exemplo=\count386
 \c@obs=\count387
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 71.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 70.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (./file.aux
-
-LaTeX Warning: Label `errorplot1v1' multiply defined.
-
-
-LaTeX Warning: Label `tradeoffplot1v1' multiply defined.
-
-
-LaTeX Warning: Label `fig:3v1' multiply defined.
-
 )
+No file file.aux.
 \openout1 = `file.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -862,4 +852,528 @@ LaTeX Font Info:    ... okay on input line 71.
 * \textheight=702.78308pt
 * \oddsidemargin=13.08827pt
 * \evensidemargin=13.08827pt
-* \topmarg
+* \topmargin=-38.1381pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count388
+\scratchdimen=\dimen307
+\scratchbox=\box85
+\nofMPsegments=\count389
+\nofMParguments=\count390
+\everyMPshowfont=\toks54
+\MPscratchCnt=\count391
+\MPscratchDim=\dimen308
+\MPnumerator=\count392
+\makeMPintoPDFobject=\count393
+\everyMPtoPDFconversion=\toks55
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+Package hyperref Info: Link coloring ON on input line 70.
+\@outlinefile=\write5
+\openout5 = `file.out'.
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+
+
+[1
+
+{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
+No file file.toc.
+\tf@toc=\write6
+\openout6 = `file.toc'.
+
+
+
+[2]
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 121.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 123.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 123.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 123.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 123.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 123.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 123.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 123.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 123.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 123.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+[3]
+\pydata@fh@_8C7DD922AD47494FC02C388E12C00EAC.data.minted=\write7
+\openout7 = `_8C7DD922AD47494FC02C388E12C00EAC.data.minted'.
+
+runsystem(latexminted config  --timestamp 20250831113552 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+
+ (./_8C7DD922AD47494FC02C388E12C00EAC.config.minted)
+runsystem(latexminted cleanconfig  --timestamp 20250831113552 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+
+ (./_minted/default.style.minted) (./_minted/9D2E32A4AFB7FF513FBF340121044120.highlight.minted
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+))
+
+[4{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] (./_minted/C26B646BFDAD37D2B947E48A6EC56143.highlight.minted
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2.
+)
+<Figures/kernel.png, id=55, 409.7709pt x 328.8285pt>
+File: Figures/kernel.png Graphic file (type png)
+<use Figures/kernel.png>
+Package pdftex.def Info: Figures/kernel.png  used on input line 187.
+(pdftex.def)             Requested size: 426.79135pt x 342.50041pt.
+
+
+[5] (./_minted/3692464690E0EE9AF3918F7EFAFC3318.highlight.minted
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 3.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)) (./_minted/2033CA564CD099FABB092C3DC747FBC6.highlight.minted) (./_minted/62C1699827F3A326F055050F0EDC9492.highlight.minted
+
+[6{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./Figures/kernel.png>]) (./_minted/291F34928702AAE79F7CC2A6E275512B.highlight.minted) (./_minted/3BDFEFE5D32CD7220C5CBCE2C78468DB.highlight.minted) (./_minted/396105A4AA8A3F8D58FFCE8729E638DE.highlight.minted) (./_minted/9E79CF63EEEF8E2FB85AD3D6373AED63.highlight.minted)
+
+[7] (./_minted/EF577C33EB6DE5B645C9F2F79FAEA4D9.highlight.minted) (./_minted/CA43263E36F30D840655E28C0357A1E9.highlight.minted) (./_minted/B3935D0C9C14250781D55C93A176D083.highlight.minted) (./_minted/DB5CDCDC79CDE856F6A0AA67E42AEDC3.highlight.minted) (./_minted/3CE6343A95A72B1FECB28708F44D4687.highlight.minted) (./_minted/4492A20D39C362D2CFE86DD940FF8F81.highlight.minted) (./_minted/B1A65A5D7CE84D8CD4E9600CB93552C2.highlight.minted
+
+[8]) (./_minted/AAA86811E1250C398F94D558DC664B47.highlight.minted) (./_minted/9D1FAE3937B97AF7CC40986C24B323BA.highlight.minted) (./_minted/D629A1A1BF8E464BA5DF77A08ABEF29E.highlight.minted) (./_minted/0E9E8A1F207B219E8B38A3B3C924E954.highlight.minted)
+Overfull \hbox (3.20549pt too wide) in paragraph at lines 366--367
+[]\T1/lmr/m/n/10.95 Note that the in-terp1d() func-tion from scipy is called, which is dif-fer-ent than np.interp().
+ []
+
+
+
+[9] (./_minted/9880827A2EE13BFD348DC19308B73B62.highlight.minted) (./_minted/302DB9C4CF42E4A1CDD89DFD27ACC58D.highlight.minted) (./_minted/7E69E3A95183AFA4106F34F3FC4BF77C.highlight.minted) (./_minted/FCD4D55F02917DBA2EC7E934DF785D29.highlight.minted) (./_minted/61AC9BF3CD6BE01F95A7D4814B2E4A4A.highlight.minted)
+
+[10] (./_minted/710F2A43A7E121DEFA2CEDC40B681A97.highlight.minted) (./_minted/1A9B26A6C2393795C3A15BF6F1D288FF.highlight.minted) (./_minted/9D1B14432EA440FC98F5F16C36B50A8B.highlight.minted)
+
+[11{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] (./_minted/15470DC779F0413544505A165D5D397C.highlight.minted) (./_minted/5D7602027EE78423E7DDC41341FA8179.highlight.minted) (./_minted/7E2E573FABC428EAB8866798162B5FD0.highlight.minted)
+
+[12] (./_minted/0A3324CD77ACB3C1DD843F4DF01D62AA.highlight.minted) (./_minted/2C4CC60BDB739CA92DFBC5365F8082C8.highlight.minted) (./_minted/3E3FE12463C18317FCEA8C9A84B57D31.highlight.minted) (./_minted/7D6E8DDA3B6F1032C825DC2C881B03C7.highlight.minted) (./_minted/0491AD96F87FAF8077F83A377A888E3D.highlight.minted
+
+[13]) (./_minted/3CE2792742F81C53A313FAAEF68C69FA.highlight.minted)
+<Figures/example1.png, id=120, 414.8298pt x 328.8285pt>
+File: Figures/example1.png Graphic file (type png)
+<use Figures/example1.png>
+Package pdftex.def Info: Figures/example1.png  used on input line 593.
+(pdftex.def)             Requested size: 426.79135pt x 338.32083pt.
+
+
+[14 <./Figures/example1.png>] (./_minted/46CA8C269B76889E96EBEA34250AB03B.highlight.minted)
+<Figures/example1error.png, id=127, 455.301pt x 339.669pt>
+File: Figures/example1error.png Graphic file (type png)
+<use Figures/example1error.png>
+Package pdftex.def Info: Figures/example1error.png  used on input line 634.
+(pdftex.def)             Requested size: 426.79135pt x 318.4078pt.
+
+
+[15 <./Figures/example1error.png>]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 652.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) (./_minted/7B99D932B4CE08A522075DD6DA791443.highlight.minted)
+
+[16] (./_minted/D96119F7F36FB1B976D597EF54E1B65E.highlight.minted) (./_minted/25222CDB47FD78C0394EDA1F09818186.highlight.minted)
+
+[17] (./_minted/9AFF6A7825373D7864FA50CE3E2076B6.highlight.minted)
+Overfull \hbox (2.14124pt too wide) in paragraph at lines 737--738
+[]\T1/lmr/m/n/10.95 Furthermore, the com-pres-sion grid it-er-ates over all reg-u-lar-iza-tion strengths and padding
+ []
+
+(./_minted/A513F9FED1360352E5F85F75B865D7B1.highlight.minted) (./_minted/BDBF90A47934EE9582057DBD4D1881A8.highlight.minted)
+
+[18] (./_minted/A1717B8CF4E5548AEAE363C558E2BE33.highlight.minted) (./_minted/E8FDEBFA316D0D73CDDFD12D69A81E37.highlight.minted) (./_minted/FD192F85D16DB3F0E6A03F741CB2F8DA.highlight.minted) (./_minted/CF0418933E4A4D29A212A5684E3D01FA.highlight.minted) (./_minted/E0D8EFE8F03269622CA78A32A2AA41C6.highlight.minted)
+
+[19] (./_minted/35010D1EEECF4366AA25688ABAD19095.highlight.minted) (./_minted/49B5BA7CF818BC312213C80BBB755F39.highlight.minted) (./_minted/4EEB6B2DDD0AD63DA1D69AE10554EAB3.highlight.minted) (./_minted/FE23B12CB7B0667347407C71DDB60B12.highlight.minted) (./_minted/EC986425A2F0421BA871029C477078C4.highlight.minted) (./_minted/CCDBFCE5B70F30A18BDFDCAE18BFC2B2.highlight.minted)
+
+[20] (./_minted/5AD37BA1564193FFF85E028B43EB98AB.highlight.minted) (./_minted/B17F40BDB5195FEF97071FCAC31B55A3.highlight.minted) (./_minted/71216C88C7EF0DFBA122097B14D9D640.highlight.minted) (./_minted/191A8B574B671A323F64B503F1A799F8.highlight.minted) (./_minted/12BF423F6291B69DA16B6408EAB1AE93.highlight.minted
+
+[21]) (./_minted/3666E20E5A4369A20C98781AD9F05271.highlight.minted)
+<Results/Result_0_1v1/heatmap1v1.png, id=167, 416.2752pt x 328.8285pt>
+File: Results/Result_0_1v1/heatmap1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/heatmap1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/heatmap1v1.png  used on input line 1004.
+(pdftex.def)             Requested size: 426.79135pt x 337.15175pt.
+
+
+[22] (./_minted/022ACC6D2D058B5B20951C6F3728B5AF.highlight.minted) (./_minted/737D313B7D6F7FD16B30AD3B0464E332.highlight.minted
+
+[23 <./Results/Result_0_1v1/heatmap1v1.png>]) (./_minted/054EB5CEBD4895166F04301E1462A89D.highlight.minted) (./_minted/016F30E7AEA697A769F1919249536A4B.highlight.minted) (./_minted/7FC1F13D39EF783A24A6FE3BFA91CEB3.highlight.minted) (./_minted/629138EA3616FEE2B02A6F3CA9885714.highlight.minted)
+<Results/Result_0_1v1/errorplot1v1.png, id=179, 455.301pt x 339.669pt>
+File: Results/Result_0_1v1/errorplot1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/errorplot1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/errorplot1v1.png  used on input line 1081.
+(pdftex.def)             Requested size: 426.79135pt x 318.4078pt.
+
+
+[24] (./_minted/20D1DE1D10D08F867B7D957294F13F12.highlight.minted) (./_minted/BBEC019515A67E3CECBDDDD0948F6EF8.highlight.minted
+
+[25 <./Results/Result_0_1v1/errorplot1v1.png>]) (./_minted/0F84686BD25BD18813374DC8011D5627.highlight.minted) (./_minted/3A14C2AAF3B9DAA2D74E7F8FD597FD8C.highlight.minted) (./_minted/F5B68F8FBBE50D6C2F672AEACA5EAED2.highlight.minted)
+<Results/Result_0_1v1/tradeoffplot1v1.png, id=192, 416.2752pt x 328.8285pt>
+File: Results/Result_0_1v1/tradeoffplot1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/tradeoffplot1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/tradeoffplot1v1.png  used on input line 1158.
+(pdftex.def)             Requested size: 426.79135pt x 337.15175pt.
+
+
+[26]
+
+[27 <./Results/Result_0_1v1/tradeoffplot1v1.png>]
+<Results/Result_0_1v1/output1v1.png, id=205, 792.8019pt x 498.663pt>
+File: Results/Result_0_1v1/output1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/output1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/output1v1.png  used on input line 1234.
+(pdftex.def)             Requested size: 192.0548pt x 120.80008pt.
+File: Results/Result_0_1v1/errorplot1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/errorplot1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/errorplot1v1.png  used on input line 1240.
+(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
+File: Results/Result_0_1v1/heatmap1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/heatmap1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/heatmap1v1.png  used on input line 1245.
+(pdftex.def)             Requested size: 192.0548pt x 151.7095pt.
+File: Results/Result_0_1v1/tradeoffplot1v1.png Graphic file (type png)
+<use Results/Result_0_1v1/tradeoffplot1v1.png>
+Package pdftex.def Info: Results/Result_0_1v1/tradeoffplot1v1.png  used on input line 1251.
+(pdftex.def)             Requested size: 192.0548pt x 151.7095pt.
+
+
+[28] (./_minted/E92D62EFAFA89ED51BE81BEEEB9947F7.highlight.minted)
+
+[29 <./Results/Result_0_1v1/output1v1.png>]
+<Results/Result_4_4v1/output4v1.png, id=218, 414.8298pt x 328.8285pt>
+File: Results/Result_4_4v1/output4v1.png Graphic file (type png)
+<use Results/Result_4_4v1/output4v1.png>
+Package pdftex.def Info: Results/Result_4_4v1/output4v1.png  used on input line 1338.
+(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
+<Results/Result_4_4v1/errorplot4v1.png, id=219, 414.8298pt x 328.8285pt>
+File: Results/Result_4_4v1/errorplot4v1.png Graphic file (type png)
+<use Results/Result_4_4v1/errorplot4v1.png>
+Package pdftex.def Info: Results/Result_4_4v1/errorplot4v1.png  used on input line 1344.
+(pdftex.def)             Requested size: 192.0548pt x 152.23634pt.
+<Results/Result_4_4v1/heatmap4v1.png, id=220, 786.2976pt x 498.663pt>
+File: Results/Result_4_4v1/heatmap4v1.png Graphic file (type png)
+<use Results/Result_4_4v1/heatmap4v1.png>
+Package pdftex.def Info: Results/Result_4_4v1/heatmap4v1.png  used on input line 1349.
+(pdftex.def)             Requested size: 192.0548pt x 121.79686pt.
+<Results/Result_4_4v1/tradeoffplot4v1.png, id=221, 455.301pt x 339.669pt>
+File: Results/Result_4_4v1/tradeoffplot4v1.png Graphic file (type png)
+<use Results/Result_4_4v1/tradeoffplot4v1.png>
+Package pdftex.def Info: Results/Result_4_4v1/tradeoffplot4v1.png  used on input line 1355.
+(pdftex.def)             Requested size: 192.0548pt x 143.27676pt.
+
+
+[30] (./_minted/761A87650EAC5591805202A648305C65.highlight.minted)
+
+[31 <./Results/Result_4_4v1/output4v1.png> <./Results/Result_4_4v1/errorplot4v1.png> <./Results/Result_4_4v1/heatmap4v1.png> <./Results/Result_4_4v1/tradeoffplot4v1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1378--1380
+
+ []
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1385 \begin{equation}
+                       
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1385 \begin{equation}
+                       
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1385 \begin{equation}
+                       
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1385 \begin{equation}
+                       
+
+[32]
+<Figures/hardware1.png, id=244, 414.8298pt x 328.8285pt>
+File: Figures/hardware1.png Graphic file (type png)
+<use Figures/hardware1.png>
+Package pdftex.def Info: Figures/hardware1.png  used on input line 1399.
+(pdftex.def)             Requested size: 213.39568pt x 169.15038pt.
+<Figures/hardware2.png, id=245, 414.8298pt x 328.8285pt>
+File: Figures/hardware2.png Graphic file (type png)
+<use Figures/hardware2.png>
+Package pdftex.def Info: Figures/hardware2.png  used on input line 1405.
+(pdftex.def)             Requested size: 213.39568pt x 169.15038pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 1408.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 1408.
+<Figures/ionlocation.png, id=246, 729.927pt x 420.6114pt>
+File: Figures/ionlocation.png Graphic file (type png)
+<use Figures/ionlocation.png>
+Package pdftex.def Info: Figures/ionlocation.png  used on input line 1427.
+(pdftex.def)             Requested size: 213.39568pt x 122.96255pt.
+
+
+[33 <./Figures/hardware1.png> <./Figures/hardware2.png>]
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1434: Package pgfkeys Error: I do not know the key '/minted/cmd/python' and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1434 d
+        ef exc_comp_plotter(self, time_array, waveform):
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1434: FancyVerb Error:
+  Extraneous input `ef exc_comp_plotter(self, time_array, waveform):' between \begin{minted}[<key=value>] and line end
+.
+\FV@Error ... {FancyVerb Error:
+\space \space #1
+}
+                                                  
+l.1434 ...omp_plotter(self, time_array, waveform):
+                                                  
+This input will be discarded. Hit <return> to continue.
+
+(./_minted/D15BE04FAA35E413278656DF5AF5F1A5.highlight.minted
+
+[34 <./Figures/ionlocation.png>])
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1486 \begin{equation}
+                       
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1486 \begin{equation}
+                       
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1486 \begin{equation}
+                       
+pdfTeX warning (ext4): destination with the same identifier (name{equation.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1486 \begin{equation}
+                       
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1494: Package pgfkeys Error: I do not know the key '/minted/cmd/python' and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1494 c
+        lass Energize():
+(That was another \errmessage.)
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1494: FancyVerb Error:
+  Extraneous input `lass Energize():' between \begin{minted}[<key=value>] and line end
+.
+\FV@Error ... {FancyVerb Error:
+\space \space #1
+}
+                                                  
+l.1494 class Energize():
+                        
+This input will be discarded. Hit <return> to continue.
+
+(./_minted/C9389C49008642148748521F7095F02E.highlight.minted)
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1527: Package pgfkeys Error: I do not know the key '/minted/cmd/python' and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1527     e
+            nergy, p = Energize().excite(redramp)
+(That was another \errmessage.)
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1527: FancyVerb Error:
+  Extraneous input `nergy, p = Energize().excite(redramp)' between \begin{minted}[<key=value>] and line end
+.
+\FV@Error ... {FancyVerb Error:
+\space \space #1
+}
+                                                  
+l.1527     energy, p = Energize().excite(redramp)
+                                                 
+This input will be discarded. Hit <return> to continue.
+
+\openout7 = `_8C7DD922AD47494FC02C388E12C00EAC.data.minted'.
+
+runsystem(latexminted highlight  --timestamp 20250831113552 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+
+(./_8C7DD922AD47494FC02C388E12C00EAC.message.minted)
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1537: Package minted Error: 
+ => ./file:1527: Pygments lexer "e" is unknown.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1537 \end{minted}
+                   
+(That was another \errmessage.)
+
+
+
+[35]
+<Figures/unprecompexc.png, id=267, 400.3758pt x 298.4751pt>
+File: Figures/unprecompexc.png Graphic file (type png)
+<use Figures/unprecompexc.png>
+Package pdftex.def Info: Figures/unprecompexc.png  used on input line 1544.
+(pdftex.def)             Requested size: 213.39568pt x 159.08826pt.
+<Figures/unp.png, id=268, 408.3255pt x 312.2064pt>
+File: Figures/unp.png Graphic file (type png)
+<use Figures/unp.png>
+Package pdftex.def Info: Figures/unp.png  used on input line 1550.
+(pdftex.def)             Requested size: 213.39568pt x 163.16289pt.
+
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1559: Package pgfkeys Error: I do not know the key '/minted/cmd/python' and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1559     e
+            nergy/hbar_omega: [75.96217604]
+(That was another \errmessage.)
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1559: FancyVerb Error:
+  Extraneous input `nergy/hbar_omega: [75.96217604]' between \begin{minted}[<key=value>] and line end
+.
+\FV@Error ... {FancyVerb Error:
+\space \space #1
+}
+                                                  
+l.1559     energy/hbar_omega: [75.96217604]
+                                           
+This input will be discarded. Hit <return> to continue.
+
+\openout7 = `_8C7DD922AD47494FC02C388E12C00EAC.data.minted'.
+
+runsystem(latexminted highlight  --timestamp 20250831113552 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+
+(./_8C7DD922AD47494FC02C388E12C00EAC.message.minted)
+
+/Users/onkar/Desktop/Work_Projects/LaTeX/file.tex:1562: Package minted Error: 
+ => ./file:1559: Pygments lexer "e" is unknown.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1562 \end{minted}
+                   
+(That was another \errmessage.)
+
+<Figures/precompexc.png, id=269, 409.0482pt x 298.4751pt>
+File: Figures/precompexc.png Graphic file (type png)
+<use Figures/precompexc.png>
+Package pdftex.def Info: Figures/precompexc.png  used on input line 1574.
+(pdftex.def)             Requested size: 213.39568pt x 155.70892pt.
+<Figures/pc.png, id=270, 408.3255pt x 312.2064pt>
+File: Figures/pc.png Graphic file (type png)
+<use Figures/pc.png>
+Package pdftex.def Info: Figures/pc.png  used on input line 1580.
+(pdftex.def)             Requested size: 213.39568pt x 163.16289pt.
+
+
+[36 <./Figures/unprecompexc.png> <./Figures/unp.png>] (./_minted/82173400A50B6063F23D4F1DACDACE57.highlight.minted)
+
+[37 <./Figures/precompexc.png> <./Figures/pc.png>]
+
+[38]
+\openout7 = `_8C7DD922AD47494FC02C388E12C00EAC.data.minted'.
+
+runsystem(latexminted clean  --timestamp 20250831113552 8C7DD922AD47494FC02C388E12C00EAC)...executed safely (allowed).
+
+ (./file.aux)
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+ ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `file.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `file.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D89E55CD7EDF9049D4B721BDFC0A1D3C;6369.
+ )
+(\end occurred when \ifx on line 1559 was incomplete)
+(\end occurred when \ifx on line 1527 was incomplete)
+(\end occurred when \ifx on line 1494 was incomplete)
+(\end occurred when \ifx on line 1434 was incomplete) 
+Here is how much of TeX's memory you used:
+ 33623 strings out of 473190
+ 679342 string characters out of 5715801
+ 1265455 words of memory out of 5000000
+ 55929 multiletter control sequences out of 15000+600000
+ 616023 words of font info for 80 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 95i,9n,93p,1062b,1030s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on file.pdf (38 pages, 900706 bytes).
+PDF statistics:
+ 417 PDF objects out of 1000 (max. 8388607)
+ 300 compressed objects within 3 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+

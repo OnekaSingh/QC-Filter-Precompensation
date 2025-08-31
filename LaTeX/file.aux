@@ -1,0 +1,68 @@
+\relax 
+\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
+\@nameuse{bbl@beforestart}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{abnt-url-package=url}
+\providecommand \oddpage@label [2]{}
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Overview}{3}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Introduction and Goal}{3}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Algorithm Steps}{3}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Terminology}{3}{subsection.1.3}\protected@file@percent }
+\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition~1.1\else \numberline {1.1}Definition\fi }{3}{definition.1}\protected@file@percent }
+\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition~1.2\else \numberline {1.2}Definition\fi }{4}{definition.2}\protected@file@percent }
+\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition~1.3\else \numberline {1.3}Definition\fi }{4}{definition.3}\protected@file@percent }
+\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition~1.4\else \numberline {1.4}Definition\fi }{4}{definition.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}The Algorithm}{4}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Filter Simulation Class}{4}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Importing Libraries}{5}{subsubsection.2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}Filter Method}{5}{subsubsection.2.1.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Kernel weights for the FIR filter. These weights correspond to the filtering behavior on the waveforms passed through the electrodes in the red trap.}}{6}{figure.caption.2}\protected@file@percent }
+\newlabel{kernel}{{2.1.2}{6}{Filter Method}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.3}The Setup}{6}{subsubsection.2.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.4}Convolution "Filter Simulation"}{9}{subsubsection.2.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.5}Interpolation Method}{9}{subsubsection.2.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.6}The Filter Precompensation}{10}{subsubsection.2.1.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.7}Tikhonov Regularization}{11}{subsubsection.2.1.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.8}Trimming Method}{12}{subsubsection.2.1.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.9}Filtering the Precompensated Waveform}{13}{subsubsection.2.1.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.10}Plotter Method}{13}{subsubsection.2.1.10}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A simple example of applying the filter simulation algorithm on an input waveform.}}{14}{figure.caption.3}\protected@file@percent }
+\newlabel{example1}{{2.1.10}{14}{Plotter Method}{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A simple example of applying the filter simulation algorithm on an input waveform.}}{15}{figure.caption.4}\protected@file@percent }
+\newlabel{example1error}{{2.1.10}{15}{Plotter Method}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Optimize Class}{15}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Parameters and Optimization Logic}{16}{subsubsection.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Optimizer Method}{17}{subsubsection.2.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Heatmap Method}{21}{subsubsection.2.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The best compression value with the current set weights is 1. This results from having a much higher weight on low error rather than high compression. As seen in a later section, higher compressions generally lead to higher error rates, which further explains why the lowest possible compression (in this case, 1) is chosen. The padding rang,e as previously mentioned, is between 5 and 61, and the regularization strength is between 1e-6 and 7e-1. The blue areas correspond to fewer errors, and the red areas have the most errors (in terms of maximum absolute error per iteration). The grayed-out areas correspond to values outside the upper and lower voltage bounds of the function and cannot be accessed. The illuminated golden cell is the chosen "best case" of the general heatmap.}}{23}{figure.caption.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}Error Plotter Method}{23}{subsubsection.2.2.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The following plot shows the pointwise error graphically corresponding to the example run.}}{25}{figure.caption.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.5}Tradeoff Plot Method}{25}{subsubsection.2.2.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The tradeoff between error values and waveform size is shown above. The range of values for this plot is given between a compression factor of 1 to 20, as this is where the rate of change of the error begins to settle. The maximum absolute error is around 11 volts, and spikes early on at around a compression factor of 4.}}{27}{figure.caption.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Use Cases}{27}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Neighboring Segment Transport}{27}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Transport over Neighboring Segments}{28}{subsubsection.3.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces (a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}}{29}{figure.caption.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}Transport over Non-Neighboring Segments}{30}{subsubsection.3.1.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces (a) The output result of the four different waveforms generated. The original in blue and precompensated filtered in red are what is supposed to match. The precompensated waveform that is not yet filtered is given in green, and the orange is the filtered but unprecompensated waveform. (b) The error between the original and precompensated filtered waveforms at every given point in time. The peak is the maximum absolute error overall. (c) The heatmap snapshot of the best case compression shows the range of padding and regularization values. The golden bordered cell marks the optimal chosen combination of values. The more blue the result, the less error, corresponding to a larger overlap in red and blue in (a). The gray areas are cases over the given voltage bounds. (d) The tradeoff between much larger compression values and error rates for the given waveform.}}{31}{figure.caption.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{32}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Closing Thoughts}{32}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Hardware Limitations}{32}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces A scatter plot showing the 0.38 $\mu $s step between points.}}{33}{figure.caption.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Ramp Excitation Simulation}{33}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Unprecompensated Ramp Simulation}{33}{subsection.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Ion initial location at bottom of potential well at segment 14.}}{34}{figure.caption.11}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Excitation induced by the unprecompensated ramp.}}{36}{figure.caption.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Precompensated Ramp Simulation}{37}{subsection.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Excitation induced by the unprecompensated ramp.}}{37}{figure.caption.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Code Reference}{37}{section.6}\protected@file@percent }
+\bibcite{orth2021}{1}
+\bibcite{bowler2012}{2}
+\bibcite{blakestad2020}{3}
+\bibcite{weidt2012}{4}
+\bibstyle{abntex2-alf}
+\xdef \mintedoldcachechecksum{\detokenize{64EC2E278DD2E28F5D53CA31947FC7CA:78}}
+\gdef \@abspage@last{38}
