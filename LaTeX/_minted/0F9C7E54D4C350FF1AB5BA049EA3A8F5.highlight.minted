@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{energy}\PYG{o}{/}\PYG{n}{hbar\PYGZus{}omega}\PYG{p}{:} \PYG{p}{[}\PYG{l+m+mf}{75.96217604}\PYG{p}{]}
+    \PYG{n}{Start} \PYG{n}{position}\PYG{p}{:} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.0003}
+    \PYG{n}{End} \PYG{n}{position}\PYG{p}{:} \PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.00029990713363558776}
+\end{MintedVerbatim}

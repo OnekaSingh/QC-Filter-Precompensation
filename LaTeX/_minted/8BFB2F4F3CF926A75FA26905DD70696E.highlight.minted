@@ -1,0 +1,24 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{Energize}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+
+    \PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{excite}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{redramp}\PYG{p}{)}\PYG{p}{:}
+
+        \PYG{n}{transport} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{p}{(}\PYG{l+m+mi}{17}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{redramp}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{dtype}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{float64}\PYG{p}{)}
+        \PYG{n}{transport}\PYG{p}{[}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{15}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{]}\PYG{p}{]} \PYG{o}{=} \PYG{n}{redramp}
+
+        \PYG{n}{redtrap} \PYG{o}{=} \PYG{n}{red\PYGZus{}system}\PYG{p}{(}\PYG{n}{trap}\PYG{p}{)}
+        \PYG{n}{redtrap}\PYG{o}{.}\PYG{n}{setIons}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{p}{[}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{300.0e\PYGZhy{}6}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{]}\PYG{p}{,}\PYG{p}{]}\PYG{p}{,} \PYG{n}{dtype}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{float64}\PYG{p}{)}\PYG{p}{)}
+
+        \PYG{n}{t}\PYG{p}{,} \PYG{n}{p} \PYG{o}{=} \PYG{n}{redtrap}\PYG{o}{.}\PYG{n}{propagate}\PYG{p}{(}\PYG{n}{transport}\PYG{p}{,} \PYG{n}{transport}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{,} \PYG{l+m+mf}{5e\PYGZhy{}9}\PYG{p}{)}
+
+        \PYG{n}{volt} \PYG{o}{=} \PYG{n}{redtrap}\PYG{o}{.}\PYG{n}{getPot}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{p}{:}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{n}{volt0} \PYG{o}{=} \PYG{n}{redtrap}\PYG{o}{.}\PYG{n}{getPot}\PYG{p}{(}\PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{p}{:}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)}
+
+        \PYG{n}{c} \PYG{o}{=} \PYG{l+m+mi}{299792458}
+        \PYG{n}{massunit} \PYG{o}{=} \PYG{l+m+mf}{931.49410242e6}\PYG{o}{/}\PYG{n}{c}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}
+        \PYG{n}{mCa40} \PYG{o}{=} \PYG{l+m+mf}{39.962590866} \PYG{o}{*} \PYG{n}{massunit}
+
+        \PYG{n}{energy} \PYG{o}{=} \PYG{n}{volt}\PYG{o}{\PYGZhy{}}\PYG{n}{volt0} \PYG{o}{+} \PYG{l+m+mf}{0.5} \PYG{o}{*} \PYG{n}{mCa40} \PYG{o}{*} \PYG{n}{p}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{*}\PYG{o}{*}\PYG{l+m+mi}{2}
+
+        \PYG{k}{return} \PYG{n}{energy}\PYG{p}{,} \PYG{n}{p}
+\end{MintedVerbatim}

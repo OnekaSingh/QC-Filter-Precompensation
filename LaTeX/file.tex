@@ -1430,7 +1430,7 @@ The goal here is to transport the ion from segment (electrode) 14 to electrode 1
 
 Then, the aformentioned classes Optimizer and FilterSimulation are imported. There is an additional method inserted into Optimizer that optimizes (min) excitation and (max) compression.
 
-\begin{minted}[python]
+\begin{minted}{python}
 def exc_comp_plotter(self, time_array, waveform):
     reg_array = []
     best_best_params_abs = []
@@ -1490,7 +1490,7 @@ Here, $t$ is time, $x(t)$ is the ensemble of position vectors, $V$ is the scalar
 \\
 The corresponding code is:
 
-\begin{minted}[python]
+\begin{minted}{python}
 class Energize():
 
     def excite(self, redramp):
@@ -1523,7 +1523,7 @@ Since the ion to be shuttled is a Carbon-40 isotope, its mass is used for the en
 \\
 The energy and plot corresponding to the energy generated during transport are then given below:
 
-\begin{minted}[python]
+\begin{minted}{python}
     energy, p = Energize().excite(redramp)
     first_p = p[0,0,0,0]
     last_p = p[-1, 0, 0, 0]
@@ -1555,7 +1555,7 @@ The corresponding result is:
 
 The final ion's energy is:
 
-\begin{minted}[python]
+\begin{minted}{python}
     energy/hbar_omega: [75.96217604]
     Start position: -0.0003
     End position: -0.00029990713363558776
@@ -1616,25 +1616,85 @@ If you had electric potential $\Phi(x)$ in volts (not energy), then $U(x)=q\,\Ph
     $ > \;\omega^2 \;=\; \dfrac{q}{m}\,\Phi''(x_0)\; $
 \end{center}
 
-\subsubsection{Estimating the curvature $U''(x_0)$}
+\subsubsection{Estimating the Curvature}
 
 For a quadratic fit (robust), fit a parabola in a small symmetric window around $x_0=0$:
 
 \begin{center}
-    $ U(x)\;\approx\; a\,x^2 + b\,x + c\quad \Longrightarrow  U''(0) = 2a\,$
+    $ U(x)\;\approx\; a\,x^2 + b\,x + c\quad \Longrightarrow \quad U''(0) = 2a $
 \end{center}
 
-$$
-U(x)\;\approx\; a\,x^2 + b\,x + c\quad \Longrightarrow \quad
-\boxed{\,U''(0) = 2a\,}.
-$$
-
-### 2) Centered finite differences (simple)
 On an evenly spaced grid with step \(dx\),
-$$
-\boxed{\,U''(x_i)\;\approx\;\dfrac{U_{i+1}-2U_i+U_{i-1}}{dx^2}\,}.
-$$
+\begin{center}
+    $ U''(x_i)\;\approx\;\dfrac{U_{i+1}-2U_i+U_{i-1}}{dx^2} $
+\end{center}
 
+\subsubsection{Units}
+The getPot method returns energy in eV, and $U''$ is kept in eV $\cdot$ m $^2$.
+The mass is expressed in eV $\cdot$ s $^2$ / m $^2$ so that $\sqrt{U''/m}$ yields rad/s directly:
+\begin{center}
+    massunit = $\dfrac{931.49410242\times 10^6}{c^2}, \; \; \; \; m_{^{40} \mathrm{Ca}^+} \;=\; 39.962590866 \times $ massunit.
+\end{center}
+
+\subsubsection{Reported Quantities}
+\begin{itemize}
+    \item Angular frequency:
+    \begin{center}
+        $ \omega \;=\; \sqrt{\dfrac{U''(0)}{m}}$ in rad/sec
+    \end{center}
+
+    \item Frequency:
+    \begin{center}
+        $f \;=\; \dfrac{\omega}{2\pi} $ Hz
+    \end{center}
+\end{itemize}
+
+For the example case, this initial frequency of the trapped ion is:
+
+\begin{minted}{python}
+#The final frequency is 424 KHz
+\end{minted}
+
+For zero excitation, the frequency of the ion throughout the applied waveform must remain zero.
+For this, a ramp with an ideal shape that results in no excitation must be found.
+
+\subsection{Theoretically Ideal Ramp}
+For a theoretically zero excitation ramp, as mentioned before, the precompensated waveform must have a smoother rate of change. An attempt at this is shown below, where waveforms '1.1' and '2.1' are an attempt at smoother precompensation, while '1.2' and '2.2' are the original precompensated waveforms.
+It is important to note that the wait time feature is removed for this example, which is why the waveform ascends and descents without being constant in the middle as done previously.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{Figures/waveformcomparison.png}
+\caption{Waveforms '1.1' and '1.2' are modified to give a precompensated result with lower derivative minimums and maximums. Waveforms '2.1' and '2.2' are the originally precompensated cases.}
+\end{figure}
+
+For these new waveforms, the resulting precompensated ramps are as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{Figures/modifiedresults.png}
+\caption{These are the outputs for the case where modified waveforms ('1.1' and '1.2') are used instead.}
+\end{figure}
+
+The resulting precompensated waveform corresponding to the modified input is a lot smoother and peaks less than the original precompensated waveform. This smoother rate of change suggests a lower excitation. Below is given a comparison
+of the original, precompensated, and excitation waveforms:
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{cc}
+    \includegraphics[width=0.45\linewidth]{Output/2.1.png} &
+    \includegraphics[width=0.45\linewidth]{Output/1.1.png} \\
+    \includegraphics[width=0.45\linewidth]{Output/1.2.png} &
+    \includegraphics[width=0.45\linewidth]{Output/2.2.png} \\
+    \includegraphics[width=0.45\linewidth]{Output/1.3.png} &
+    \includegraphics[width=0.45\linewidth]{Output/2.3.png}
+\end{tabular}
+\caption{The first column is the original input, precompensated waveform, and output excitation. The second column is the smoothness-modified input, reprecompensated waveform, and new ouput excitation.}
+\end{figure}
+
+As seen in the image above, a smoother precompensated waveform results in less excitation. In the modified input, the corresponding excitation graph no longer peaks at 60 volts but instead at 40 volts. 
+With different input waveforms that result in smoother outputs, an ideal input waveform can be reached at which the corresponding outfit has no excitation. This can be verified by keeping the frequency
+of the trapped ion constant throughout transport. 
 
 \section{Code Reference}
 
